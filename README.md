@@ -24,9 +24,19 @@ curl https://models.dev/api.json
 
 Use the **Model ID** field to do a lookup on any model; it's the identifier used by [AI SDK](https://ai-sdk.dev/).
 
+### Logos
+
+Provider logos are available as SVG files:
+
+```bash
+curl https://models.dev/logos/{provider}.svg
+```
+
+Replace `{provider}` with the **Provider ID** (e.g., `anthropic`, `openai`, `google`). If we don't have a provider's logo, a default logo is served instead.
+
 ## Contributing
 
-The data is stored in the repo as TOML files; organized by provider and model. This is used to generate this page and power the API.
+The data is stored in the repo as TOML files; organized by provider and model. The logo is stored as an SVG. This is used to generate this page and power the API.
 
 We need your help keeping the data up to date.
 
@@ -45,7 +55,22 @@ If the AI provider doesn't already exist in the `providers/` directory:
    name = "Provider Name"
    ```
 
-#### 2. Add a Model Definition
+#### 2. Add a Logo (optional)
+
+To add a logo for the provider:
+
+1. Add a `logo.svg` file to the provider's directory (e.g., `providers/newprovider/logo.svg`)
+2. Use SVG format with no fixed size or colors - use `currentColor` for fills/strokes
+
+Example SVG structure:
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Logo paths here -->
+</svg>
+```
+
+#### 3. Add a Model Definition
 
 Create a new TOML file in the provider's `models/` directory where the filename is the model ID:
 
@@ -74,7 +99,7 @@ input = ["text", "image"]   # Supported input modalities
 output = ["text"]           # Supported output modalities
 ```
 
-#### 3. Submit a Pull Request
+#### 4. Submit a Pull Request
 
 1. Fork this repo
 2. Create a new branch with your changes

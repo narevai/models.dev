@@ -402,6 +402,16 @@ export const Rendered = renderToString(
           </a>
           .
         </p>
+        <h2>Logos</h2>
+        <p>Provider logos are available at <code>/logos/{`{provider}`}.svg</code> where <code>{`{provider}`}</code> is the <b>Provider ID</b>.</p>
+        <div class="code-block">
+          <code>
+            curl <a href="/logos/anthropic.svg">https://models.dev/logos/anthropic.svg</a>
+          </code>
+        </div>
+        <p>
+          If we don't have a provider's logo, a default logo is served instead.
+        </p>
         <h2>Contribute</h2>
         <p>
           The data is stored in the{" "}
@@ -412,8 +422,8 @@ export const Rendered = renderToString(
           >
             GitHub repo
           </a>{" "}
-          as TOML files; organized by provider and model. This is used to
-          generate this page and power the API.
+          as TOML files; organized by provider and model. The logo is stored as
+          an SVG. This is used to generate this page and power the API.
         </p>
         <p>
           We need your help keeping this up to date. Feel free to edit the data

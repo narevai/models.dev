@@ -53,6 +53,15 @@ If the AI provider doesn't already exist in the `providers/` directory:
 
    ```toml
    name = "Provider Name"
+   npm = "" # AI SDK Package
+   env = [""] # Environment Variables used for auth
+   doc = "" # Link to provider's documentation
+
+   # If the provider doesn't have a package you can
+   # use openai-compatible. In which case the api
+   # field is required.
+   npm = "@ai-sdk/openai-compatible"
+   api = ""
    ```
 
 #### 2. Add a Logo (optional)
@@ -122,6 +131,10 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 **Provider Schema:**
 
 - `name`: String - Display name of the provider
+- `npm`: String - AI SDK Package name
+- `env`: String[] - Environment Variables used for auth
+- `doc`: String - Link to provider's documentation
+- `api`: String - Required if using `@ai-sdk/openai-compatible` for npm package
 
 **Model Schema:**
 

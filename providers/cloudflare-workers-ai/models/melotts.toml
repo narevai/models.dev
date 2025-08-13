@@ -1,0 +1,18 @@
+# https://developers.cloudflare.com/workers-ai/models/melotts/
+
+name = "@cf/myshell-ai/melotts"
+attachment = true
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2024-07-19"
+last_updated = "todo"
+
+[cost]
+# per audio minute
+input = 0.0002
+
+[modalities]
+input = ["text"]
+output = ["audio"]

@@ -1,0 +1,18 @@
+# https://developers.cloudflare.com/workers-ai/models/m2m100-1.2b/
+
+name = "@cf/meta/m2m100-1.2b"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2023-09-25"
+last_updated = "todo"
+
+[cost]
+input = 0.34
+output = 0.34
+
+[modalities]
+input = ["text"]
+output = ["text"]

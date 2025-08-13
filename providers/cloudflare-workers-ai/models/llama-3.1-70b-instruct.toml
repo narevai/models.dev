@@ -1,0 +1,17 @@
+# https://developers.cloudflare.com/workers-ai/models/llama-3.1-70b-instruct/
+
+name = "@cf/meta/llama-3.1-70b-instruct"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "todo"
+last_updated = "todo"
+
+[limit]
+context = 24000
+
+[modalities]
+input = ["text"]
+output = ["text"]

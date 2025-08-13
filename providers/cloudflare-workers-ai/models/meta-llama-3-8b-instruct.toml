@@ -1,0 +1,18 @@
+# https://developers.cloudflare.com/workers-ai/models/meta-llama-3-8b-instruct/
+
+name = "@hf/meta-llama/meta-llama-3-8b-instruct"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2024-05-22"
+last_updated = "todo"
+
+[limit]
+context = 8192
+output = 0
+
+[modalities]
+input = ["text"]
+output = ["text"]

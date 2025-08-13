@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/resnet-50/
+
+name = "@cf/microsoft/resnet-50"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2023-09-25"
+last_updated = "todo"
+
+[cost]
+# per inference request
+input = "0.0000025"
+
+[limit]
+context = 0
+
+[modalities]
+input = ["image"]
+output = ["text"]

@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/llamaguard-7b-awq/
+
+name = "@hf/thebloke/llamaguard-7b-awq"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2024-02-06"
+last_updated = "todo"
+
+[cost]
+input = 0
+output = 0
+
+[limit]
+context = 4096
+
+[modalities]
+input = ["text"]
+output = ["text"]

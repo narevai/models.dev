@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/mistral-small-3.1-24b-instruct/
+
+name = "@cf/mistralai/mistral-small-3.1-24b-instruct"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2025-03-18"
+last_updated = "todo"
+
+[cost]
+input = 0.35
+output = 0.56
+
+[limit]
+context = 128000
+
+[modalities]
+input = ["text"]
+output = ["text"]

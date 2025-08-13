@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/deepseek-r1-distill-qwen-32b/
+
+name = "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b"
+attachment = false
+reasoning = true
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2025-01-22"
+last_updated = "todo"
+
+[cost]
+input = 0.5
+output = 4.88
+
+[limit]
+context = 80000
+
+[modalities]
+input = ["text"]
+output = ["text"]

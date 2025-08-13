@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/whisper/
+
+name = "@cf/openai/whisper"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2023-09-25"
+last_updated = "todo"
+
+[cost]
+# per audio minute
+input = 0.00045
+
+[limit]
+context = 0
+
+[modalities]
+input = ["audio"]
+output = ["text"]

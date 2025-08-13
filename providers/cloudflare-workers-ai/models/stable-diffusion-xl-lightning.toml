@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/stable-diffusion-xl-lightning/
+
+name = "@cf/bytedance/stable-diffusion-xl-lightning"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2024-02-27"
+last_updated = "todo"
+
+[cost]
+input = 0
+output = 0
+
+[limit]
+context = 0
+
+[modalities]
+input = ["text"]
+output = ["image"]

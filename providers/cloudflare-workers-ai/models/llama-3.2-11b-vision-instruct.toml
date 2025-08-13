@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/llama-3.2-11b-vision-instruct/
+
+name = "@cf/meta/llama-3.2-11b-vision-instruct"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2024-09-25"
+last_updated = "todo"
+
+[cost]
+input = 0.049
+output = 0.68
+
+[limit]
+context = 128000
+
+[modalities]
+input = ["text"]
+output = ["text"]

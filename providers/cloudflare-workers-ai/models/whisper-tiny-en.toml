@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/whisper-tiny-en/
+
+name = "@cf/openai/whisper-tiny-en"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = false
+open_weights = true
+release_date = "2024-04-22"
+last_updated = "todo"
+
+[cost]
+input = 0
+output = 0
+
+[limit]
+context = 0
+
+[modalities]
+input = ["audio"]
+output = ["text"]

@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/llama-4-scout-17b-16e-instruct/
+
+name = "@cf/meta/llama-4-scout-17b-16e-instruct"
+attachment = false
+reasoning = false
+tool_call = true
+temperature = true
+open_weights = true
+release_date = "2025-04-05"
+last_updated = "todo"
+
+[cost]
+input = 0.27
+output = 0.85
+
+[limit]
+context = 131000
+
+[modalities]
+input = ["text"]
+output = ["text"]

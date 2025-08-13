@@ -1,0 +1,21 @@
+# https://developers.cloudflare.com/workers-ai/models/llama-guard-3-8b/
+
+name = "@cf/meta/llama-guard-3-8b"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = true
+open_weights = true
+release_date = "2025-01-22"
+last_updated = "todo"
+
+[cost]
+input = 0.48
+output = 0.03
+
+[limit]
+context = 0
+
+[modalities]
+input = ["text"]
+output = ["text"]

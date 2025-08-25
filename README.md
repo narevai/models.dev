@@ -46,22 +46,23 @@ To add a new model, start by checking if the provider already exists in the `pro
 
 #### 1. Create a Provider
 
-If the AI provider doesn't already exist in the `providers/` directory:
+If the provider isn't already in `providers/`:
 
 1. Create a new folder in `providers/` with the provider's ID. For example, `providers/newprovider/`.
-2. Add a `provider.toml` file with the provider information:
+2. Add a `provider.toml` with the provider details:
 
    ```toml
    name = "Provider Name"
-   npm = "" # AI SDK Package
-   env = [""] # Environment Variables used for auth
-   doc = "" # Link to provider's documentation
+   npm = "@ai-sdk/provider" # AI SDK Package name
+   env = ["PROVIDER_API_KEY"] # Environment Variable keys used for auth
+   doc = "https://example.com/docs/models" # Link to provider's documentation
+   ```
 
-   # If the provider doesn't have a package you can
-   # use openai-compatible. In which case the api
-   # field is required.
-   npm = "@ai-sdk/openai-compatible"
-   api = ""
+   If the provider doesn’t publish an npm package but exposes an OpenAI-compatible endpoint, set the npm field accordingly and include the base URL:
+
+   ```toml
+   npm = "@ai-sdk/openai-compatible" # Use OpenAI-compatible SDK
+   api = "https://api.example.com/v1" # Required with openai-compatible
    ```
 
 #### 2. Add a Logo (optional)
@@ -132,9 +133,9 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 
 - `name`: String - Display name of the provider
 - `npm`: String - AI SDK Package name
-- `env`: String[] - Environment Variables used for auth
-- `doc`: String - Link to provider's documentation
-- `api`: String - Required if using `@ai-sdk/openai-compatible` for npm package
+- `env`: String[] - Environment variable keys used for auth
+- `doc`: String - Link to the provider's documentation
+- `api` _(optional)_: String - Required only when using `@ai-sdk/openai-compatible` as the npm package
 
 **Model Schema:**
 

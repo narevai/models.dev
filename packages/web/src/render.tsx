@@ -4,11 +4,65 @@
 import { generate } from "models.dev";
 import { Fragment } from "hono/jsx";
 import { renderToString } from "hono/jsx/dom/server";
+import { existsSync } from "fs";
 import path from "path";
 
 export const Providers = await generate(
   path.join(import.meta.dir, "..", "..", "..", "providers")
 );
+
+// Function to load SVG content
+const loadProviderSvg = async (providerId: string): Promise<string | null> => {
+  const providerLogoPath = path.join(
+    import.meta.dir,
+    "..", "..", "..",
+    "providers",
+    providerId,
+    "logo.svg"
+  );
+
+  const defaultLogoPath = path.join(
+    import.meta.dir,
+    "..", "..", "..",
+    "providers",
+    "logo.svg"
+  );
+
+  try {
+    // Try provider-specific logo first
+    if (existsSync(providerLogoPath)) {
+      const file = Bun.file(providerLogoPath);
+      return await file.text();
+    }
+    //
+    // Fall back to default logo
+    if (existsSync(defaultLogoPath)) {
+      const file = Bun.file(defaultLogoPath);
+      return await file.text();
+    }
+    return null;
+  } catch (error) {
+    console.warn(`Failed to load logo for provider ${providerId}:`, error);
+    return null;
+  }
+};
+
+// Create a cache of loaded SVGs at build time
+const providerLogos = new Map<string, string>();
+
+// Pre-load all provider logos
+for (const [providerId] of Object.entries(Providers)) {
+  const svgContent = await loadProviderSvg(providerId);
+  if (svgContent) {
+    providerLogos.set(providerId, svgContent);
+  }
+}
+
+function renderProviderLogo(providerId: string) {
+  const svgContent = providerLogos.get(providerId) || "";
+
+  return <span dangerouslySetInnerHTML={{ __html: svgContent }} />;
+}
 
 const getModalityIcon = (modality: string) => {
   switch (modality) {
@@ -257,53 +311,60 @@ export const Rendered = renderToString(
               )
               .map(([modelId, model]) => (
                 <tr key={`${providerId}-${modelId}`}>
-                  <td>{provider.name}</td>
+                  <td>
+                    <div class="provider-cell">
+                      {renderProviderLogo(providerId)}
+                      <span>{provider.name}</span>
+                    </div>
+                  </td>
                   <td>{model.name}</td>
                   <td>{providerId}</td>
-                  <td class="model-id-cell">
-                    <span class="model-id-text">{modelId}</span>
-                    <button
-                      class="copy-button"
-                      onclick={`copyModelId(this, '${modelId}')`}
-                    >
-                      <svg
-                        class="copy-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                  <td>
+                    <div class="model-id-cell">
+                      <span class="model-id-text">{modelId}</span>
+                      <button
+                        class="copy-button"
+                        onclick={`copyModelId(this, '${modelId}')`}
                       >
-                        <rect
+                        <svg
+                          class="copy-icon"
+                          xmlns="http://www.w3.org/2000/svg"
                           width="14"
                           height="14"
-                          x="8"
-                          y="8"
-                          rx="2"
-                          ry="2"
-                        />
-                        <path d="m4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                      </svg>
-                      <svg
-                        class="check-icon"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        style="display: none;"
-                      >
-                        <polyline points="20,6 9,17 4,12" />
-                      </svg>
-                    </button>
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <rect
+                            width="14"
+                            height="14"
+                            x="8"
+                            y="8"
+                            rx="2"
+                            ry="2"
+                          />
+                          <path d="m4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                        </svg>
+                        <svg
+                          class="check-icon"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          style="display: none;"
+                        >
+                          <polyline points="20,6 9,17 4,12" />
+                        </svg>
+                      </button>
+                    </div>
                   </td>
                   <td>{model.tool_call ? "Yes" : "No"}</td>
                   <td>{model.reasoning ? "Yes" : "No"}</td>
@@ -402,6 +463,16 @@ export const Rendered = renderToString(
           </a>
           .
         </p>
+        <h2>Logos</h2>
+        <p>Provider logos are available at <code>/logos/{`{provider}`}.svg</code> where <code>{`{provider}`}</code> is the <b>Provider ID</b>.</p>
+        <div class="code-block">
+          <code>
+            curl <a href="/logos/anthropic.svg">https://models.dev/logos/anthropic.svg</a>
+          </code>
+        </div>
+        <p>
+          If we don't have a provider's logo, a default logo is served instead.
+        </p>
         <h2>Contribute</h2>
         <p>
           The data is stored in the{" "}
@@ -412,8 +483,8 @@ export const Rendered = renderToString(
           >
             GitHub repo
           </a>{" "}
-          as TOML files; organized by provider and model. This is used to
-          generate this page and power the API.
+          as TOML files; organized by provider and model. The logo is stored as
+          an SVG. This is used to generate this page and power the API.
         </p>
         <p>
           We need your help keeping this up to date. Feel free to edit the data

@@ -2,4 +2,4 @@ name = "Zhipu AI"
 env = ["ZHIPU_API_KEY"]
 npm = "@ai-sdk/openai-compatible"
 doc = "https://docs.z.ai/guides/overview/pricing"
-api = "https://api.z.ai/api/paas/v4"
+api = "https://open.bigmodel.cn/api/paas/v4"

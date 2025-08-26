@@ -147,7 +147,7 @@ document.querySelectorAll("th.sortable").forEach((header) => {
 // Handle Search
 ///////////////////
 function filterTable(value: string) {
-  const lowerCaseValue = value.toLowerCase();
+  const lowerCaseValues = value.toLowerCase().split(",").filter(str => str.trim() !== "");
   const rows = document.querySelectorAll(
     "table tbody tr"
   ) as NodeListOf<HTMLTableRowElement>;
@@ -156,7 +156,8 @@ function filterTable(value: string) {
     const cellTexts = Array.from(row.cells).map((cell) =>
       cell.textContent!.toLowerCase()
     );
-    const isVisible = cellTexts.some((text) => text.includes(lowerCaseValue));
+    const isVisible = lowerCaseValues.length === 0 ||
+     lowerCaseValues.some((lowerCaseValue) => cellTexts.some((text) => text.includes(lowerCaseValue)));
     row.style.display = isVisible ? "" : "none";
   });
 

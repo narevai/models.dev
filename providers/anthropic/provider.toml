@@ -1,5 +1,4 @@
 name = "Anthropic"
 env = ["ANTHROPIC_API_KEY"]
 npm = "@ai-sdk/anthropic"
-api = "https://api.anthropic.com/v1"
 doc = "https://docs.anthropic.com/en/docs/about-claude/models"

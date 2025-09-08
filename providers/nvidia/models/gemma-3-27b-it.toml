@@ -1,4 +1,5 @@
 name = "Gemma-3-27B-IT"
+id = "google/gemma-3-27b-it"
 release_date = "2024-12-01"
 last_updated = "2025-09-05"
 attachment = true

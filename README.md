@@ -82,7 +82,9 @@ Example SVG structure:
 
 #### 3. Add a Model Definition
 
-Create a new TOML file in the provider's `models/` directory where the filename is the model ID:
+Create a new TOML file in the provider's `models/` directory where the filename is the model ID.
+
+**Optional:** For better organization, you can create subfolders based on the first part of the model ID (before the `/`). For example, for a model with ID `openai/gpt-4`, create a subfolder `openai/` and place the `gpt-4.toml` file inside it.
 
 ```toml
 name = "Model Display Name"

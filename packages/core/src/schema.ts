@@ -29,6 +29,10 @@ export const Model = z
       .object({
         input: z.number().min(0, "Input price cannot be negative"),
         output: z.number().min(0, "Output price cannot be negative"),
+        reasoning: z
+          .number()
+          .min(0, "Input price cannot be negative")
+          .optional(),
         cache_read: z
           .number()
           .min(0, "Cache read price cannot be negative")
@@ -50,7 +54,16 @@ export const Model = z
       })
       .optional(),
   })
-  .strict();
+  .strict()
+  .refine(
+    (data) => {
+      return !(data.reasoning === false && data.cost?.reasoning !== undefined);
+    },
+    {
+      message: "Cannot set cost.reasoning when reasoning is false",
+      path: ["cost", "reasoning"],
+    }
+  );
 
 export type Model = z.infer<typeof Model>;
 

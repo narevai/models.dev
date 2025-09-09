@@ -11,8 +11,8 @@ open_weights = false
 [cost]
 input = 0.60
 output = 4.00
+reasoning = 4.00
 cache_read = 0.15
-cache_write = 4.00
 
 [limit]
 context = 131_072

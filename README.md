@@ -97,6 +97,7 @@ last_updated = "2025-02-19" # Most recent update date
 [cost]
 input = 3.00                # Cost per million input tokens (USD)
 output = 15.00              # Cost per million output tokens (USD)
+reasoning = 15.00           # Cost per million reasoning tokens (USD)
 cache_read = 0.30           # Cost per million cached read tokens (USD)
 cache_write = 3.75          # Cost per million cached write tokens (USD)
 
@@ -149,6 +150,7 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 - `last_updated`: String — Most recent update date in `YYYY-MM` or `YYYY-MM-DD`
 - `cost.input` _(optional)_: Number — Cost per million input tokens (USD)
 - `cost.output` _(optional)_: Number — Cost per million output tokens (USD)
+- `cost.reasoning` _(optional)_: Number — Cost per million reasoning tokens (USD)
 - `cost.cache_read` _(optional)_: Number — Cost per million cached read tokens (USD)
 - `cost.cache_write` _(optional)_: Number — Cost per million cached write tokens (USD)
 - `limit.context`: Number — Maximum context window (tokens)

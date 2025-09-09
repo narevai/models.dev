@@ -12,6 +12,7 @@ experimental = true
 [cost]
 input = 1.25
 output = 10.00
+reasoning = 10.00
 cache_read = 0.125
 
 [limit]

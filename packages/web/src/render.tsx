@@ -408,7 +408,7 @@ export const Rendered = renderToString(
                   <td>{renderCost(model.cost?.reasoning)}</td>
                   <td>{renderCost(model.cost?.cache_read)}</td>
                   <td>{renderCost(model.cost?.cache_write)}</td>
-                  <td>{renderCost(model.cost?.input_audio_token)}</td>
+                  <td>{renderCost(model.cost?.input_audio)}</td>
                   <td>{model.limit.context.toLocaleString()}</td>
                   <td>{model.limit.output.toLocaleString()}</td>
                   <td>{model.temperature ? "Yes" : "No"}</td>

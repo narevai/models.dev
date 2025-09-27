@@ -41,7 +41,7 @@ export const Model = z
           .number()
           .min(0, "Cache write price cannot be negative")
           .optional(),
-        input_audio_token: z
+        input_audio: z
           .number()
           .min(0, "Audio input price cannot be negative")
           .optional(),

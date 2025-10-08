@@ -55,7 +55,9 @@ export const Model = z
       context: z.number().min(0, "Context window must be positive"),
       output: z.number().min(0, "Output tokens must be positive"),
     }),
-    experimental: z.boolean().optional(),
+    experimental: z.boolean().optional(), // deprecated
+    alpha: z.boolean().optional(),
+    beta: z.boolean().optional(),
     provider: z
       .object({
         npm: z.string().optional(),

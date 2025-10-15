@@ -1,4 +1,4 @@
-name = "Gemini Flash Latest"
+name = "Gemini 2.5 Flash Preview 09-25"
 release_date = "2025-09-25"
 last_updated = "2025-09-25"
 attachment = true
@@ -12,7 +12,7 @@ open_weights = false
 input = 0.30
 output = 2.50
 cache_read = 0.075
-input_audio = 1.00
+cache_write = 0.383
 
 [limit]
 context = 1_048_576

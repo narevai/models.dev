@@ -57,6 +57,7 @@ export const Model = z
     }),
     alpha: z.boolean().optional(),
     beta: z.boolean().optional(),
+    deprecated: z.boolean().optional(),
     provider: z
       .object({
         npm: z.string().optional(),

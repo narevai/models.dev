@@ -340,7 +340,7 @@ export const Rendered = renderToString(
           )
           .flatMap(([providerId, provider]) =>
             Object.entries(provider.models)
-              .filter(([, model]) => !model.alpha)
+              .filter(([, model]) => model.status !== "alpha")
               .sort(([, modelA], [, modelB]) =>
                 modelA.name.localeCompare(modelB.name)
               )

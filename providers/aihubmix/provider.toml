@@ -1,5 +1,4 @@
 name = "AIHubMix"
-npm = "@ai-sdk/openai-compatible"
-api = "https://api.aihubmix.com/v1"
+npm = "@aihubmix/ai-sdk-provider"
 env = ["AIHUBMIX_API_KEY"]
-doc = "https://aihubmix.com/docs/models"
+doc = "https://docs.aihubmix.com"

@@ -1,11 +1,11 @@
-name = "GLM 4.6"
-release_date = "2025-09-30"
-last_updated = "2025-09-30"
+name = "Minimax-M2"
+release_date = "2025-10-27"
+last_updated = "2025-10-27"
 attachment = false
 reasoning = true
 temperature = true
 tool_call = true
-knowledge = "2025-04"
+# knowledge = "2025-04" # Not listed on model page.
 open_weights = true
 
 [cost]
@@ -13,7 +13,7 @@ input = 0.55
 output = 2.19
 
 [limit]
-context = 200_000
+context = 196_608
 output = 64_000
 
 [modalities]

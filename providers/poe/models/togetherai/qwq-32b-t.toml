@@ -1,0 +1,15 @@
+name = "QwQ-32B-T"
+release_date = "2025-03-20"
+last_updated = "2025-03-20"
+attachment = true
+reasoning = false
+temperature = false
+open_weights = false
+tool_call = false
+[limit]
+context = 32_768
+output = 0
+
+[modalities]
+input = ["text"]
+output = ["text"]

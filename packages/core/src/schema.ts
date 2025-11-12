@@ -6,8 +6,9 @@ export const Model = z
     name: z.string().min(1, "Model name cannot be empty"),
     attachment: z.boolean(),
     reasoning: z.boolean(),
-    temperature: z.boolean(),
     tool_call: z.boolean(),
+    structured_output: z.boolean().optional(),
+    temperature: z.boolean().optional(),
     knowledge: z
       .string()
       .regex(/^\d{4}-\d{2}(-\d{2})?$/, {

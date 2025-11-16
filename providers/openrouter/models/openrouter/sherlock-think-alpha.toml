@@ -5,7 +5,7 @@ attachment = true
 reasoning = true
 temperature = false
 tool_call = true
-knowledge = "unknown"
+knowledge = "2025-11"
 open_weights = false
 
 [cost]

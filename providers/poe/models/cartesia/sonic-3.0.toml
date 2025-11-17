@@ -1,15 +1,15 @@
-name = "Cartesia-Sonic-3.0"
+name = "Sonic-3.0"
 release_date = "2025-10-22"
 last_updated = "2025-10-22"
 attachment = true
-reasoning = false
+reasoning = null
 temperature = false
 open_weights = false
-tool_call = false
+tool_call = null
 
 [limit]
-context = 0
-output = 0
+context = null
+output = null
 
 [modalities]
 input = ["text"]

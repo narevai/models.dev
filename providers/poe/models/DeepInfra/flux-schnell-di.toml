@@ -8,7 +8,7 @@ open_weights = false
 tool_call = false
 
 [limit]
-context = 0
+context = 256
 output = 0
 
 [modalities]

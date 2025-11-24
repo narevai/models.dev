@@ -2,10 +2,10 @@ name = "Nano-Banana-Pro"
 release_date = "2025-11-19"
 last_updated = "2025-11-19"
 attachment = true
-reasoning = null
+reasoning = false
 temperature = false
 open_weights = false
-tool_call = null
+tool_call = true
 
 [cost]
 input = 1.6
@@ -15,7 +15,7 @@ image = 96
 
 [limit]
 context = 32_768
-output = null
+output = 0
 
 [modalities]
 input = ["text", "image"]

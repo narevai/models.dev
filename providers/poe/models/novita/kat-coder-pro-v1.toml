@@ -2,14 +2,14 @@ name = "Kat-Coder-Pro-V1"
 release_date = "2025-10-01"
 last_updated = "2025-10-01"
 attachment = true
-reasoning = null
+reasoning = false
 temperature = false
 open_weights = false
-tool_call = null
+tool_call = false
 
 [limit]
-context = null
-output = null
+context = 256_000
+output = 0
 
 [modalities]
 input = ["text"]

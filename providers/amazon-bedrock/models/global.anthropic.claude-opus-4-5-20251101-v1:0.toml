@@ -1,6 +1,6 @@
-name = "Claude Opus 4.5 (latest)"
+name = "Claude Opus 4.5 (Global)"
 release_date = "2025-11-24"
-last_updated = "2025-11-24"
+last_updated = "2025-08-01"
 attachment = true
 reasoning = true
 temperature = true
@@ -11,8 +11,8 @@ open_weights = false
 [cost]
 input = 5.00
 output = 25.00
-cache_read = 0.50
-cache_write = 6.25
+cache_read = 1.50
+cache_write = 18.75
 
 [limit]
 context = 200_000

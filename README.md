@@ -169,7 +169,9 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 - `limit.output`: Number — Maximum output tokens
 - `modalities.input`: Array of strings — Supported input modalities (e.g., ["text", "image", "audio", "video", "pdf"])
 - `modalities.output`: Array of strings — Supported output modalities (e.g., ["text"])
-- `status` _(optional)_: Array of strings — Supported status:
+- `status` _(optional)_: String — Supported status:
+  - `alpha` - Indicate the model is in alpha testing
+  - `beta` - Indicate the model is in beta testing
   - `deprecated` - Indicate the model is no longer served by the provider's public API
 
 ### Examples

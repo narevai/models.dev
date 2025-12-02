@@ -1,4 +1,4 @@
-name = "Minimax-M2"
+name = "MiniMax-M2"
 release_date = "2025-10-27"
 last_updated = "2025-10-27"
 attachment = false
@@ -14,7 +14,7 @@ output = 2.19
 
 [limit]
 context = 196_608
-output = 64_000
+output = 131_000
 
 [modalities]
 input = ["text"]

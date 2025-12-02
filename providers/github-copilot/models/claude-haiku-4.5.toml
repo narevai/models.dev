@@ -5,11 +5,15 @@ attachment = true
 reasoning = true
 temperature = true
 tool_call = true
-knowledge = "2025-02-31"
+knowledge = "2025-02-28"
 open_weights = false
 
+[cost]
+input = 0
+output = 0
+
 [limit]
-context = 144_000
+context = 128_000
 output = 16_000
 
 [modalities]

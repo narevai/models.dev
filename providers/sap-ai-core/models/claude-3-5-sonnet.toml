@@ -1,4 +1,4 @@
-name = "Claude 3.5 Sonnet"
+name = "Claude Sonnet 3.5"
 release_date = "2024-06-20"
 attachment = true
 reasoning = false

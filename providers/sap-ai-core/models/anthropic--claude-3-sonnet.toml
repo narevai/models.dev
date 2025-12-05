@@ -1,18 +1,19 @@
-name = "GPT-4o"
-release_date = "2024-05-13"
-last_updated = "2024-05-13"
+name = "anthropic--claude-3-sonnet"
+release_date = "2024-03-04"
+last_updated = "2024-03-04"
 attachment = true
 reasoning = false
 temperature = true
+knowledge = "2023-08-31"
 tool_call = true
 open_weights = false
 
 [cost]
-input = 2.50
-output = 10.00
+input = 3.00
+output = 15.00
 
 [limit]
-context = 128_000
+context = 200_000
 output = 4_096
 
 [modalities]

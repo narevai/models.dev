@@ -3,11 +3,11 @@ attachment = true
 reasoning = true
 tool_call = true
 temperature = true
-knowledge = ""
+knowledge = "2025-03"
 release_date = "2025-12-05"
 last_updated = "2025-12-05"
 open_weights = false
-status = "beta"
+beta = true
 
 [cost]
 input = 6.0

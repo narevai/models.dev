@@ -1,0 +1,19 @@
+# TODO: Fill in model details
+# Model ID: openai/o4-mini-high
+
+name = "o4 mini high"
+release_date = "2025-12-07"
+last_updated = "2025-12-07"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = false
+open_weights = false
+
+[limit]
+context = 0
+output = 0
+
+[modalities]
+input = ["text"]
+output = ["text"]

@@ -1,0 +1,19 @@
+# TODO: Fill in model details
+# Model ID: openrouter/openai/o1-mini-2024-09-12
+
+name = "o1 mini 2024 09 12"
+release_date = "2025-12-07"
+last_updated = "2025-12-07"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = false
+open_weights = false
+
+[limit]
+context = 0
+output = 0
+
+[modalities]
+input = ["text"]
+output = ["text"]

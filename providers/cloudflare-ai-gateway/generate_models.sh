@@ -60,20 +60,22 @@ API_MODEL_FILES=$(mktemp)
 trap "rm -f ${API_MODEL_FILES}" EXIT
 
 # Process each model ID
-for MODEL_ID in ${MODEL_IDS}; do
-  # Convert model ID to file path
-  # e.g., "anthropic/claude-3-opus" -> "anthropic/claude-3-opus.toml"
-  # e.g., "@cf/meta/llama-3-8b-instruct" -> "workers-ai/llama-3-8b-instruct.toml"
+while IFS= read -r MODEL_ID; do
+  # Skip empty lines
+  [[ -z "${MODEL_ID}" ]] && continue
   
-  if [[ "${MODEL_ID}" == @cf/* ]]; then
-    # Workers AI model: @cf/vendor/model-name -> workers-ai/model-name.toml
-    MODEL_NAME=$(echo "${MODEL_ID}" | sed 's|@cf/[^/]*/||')
+  # Convert model ID to file path based on the API format:
+  # - "workers-ai/@cf/vendor/model-name" -> "workers-ai/model-name.toml"
+  # - "anthropic/claude-opus-4-5" -> "anthropic/claude-opus-4-5.toml"
+  # - "openrouter/anthropic/claude-opus-4.5" -> "openrouter/anthropic/claude-opus-4.5.toml"
+  # - "google-ai-studio/gemini-2.5-flash" -> "google-ai-studio/gemini-2.5-flash.toml"
+  
+  if [[ "${MODEL_ID}" == workers-ai/@cf/* ]]; then
+    # Workers AI model: workers-ai/@cf/vendor/model-name -> workers-ai/model-name.toml
+    MODEL_NAME=$(echo "${MODEL_ID}" | sed 's|workers-ai/@cf/[^/]*/||')
     MODEL_PATH="workers-ai/${MODEL_NAME}.toml"
-  elif [[ "${MODEL_ID}" == */* ]]; then
-    # Provider-prefixed model: provider/model-name -> provider/model-name.toml
-    MODEL_PATH="${MODEL_ID}.toml"
   else
-    # Simple model ID without provider prefix
+    # All other models: keep the path structure as-is
     MODEL_PATH="${MODEL_ID}.toml"
   fi
   
@@ -88,7 +90,7 @@ for MODEL_ID in ${MODEL_IDS}; do
   if [[ ! -f "${FULL_PATH}" ]]; then
     echo "Creating new model: ${MODEL_PATH}"
     
-    # Generate a human-readable name from model ID
+    # Generate a human-readable name from model ID (use the last part)
     DISPLAY_NAME=$(echo "${MODEL_ID}" | sed 's|.*/||' | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
     TODAY=$(date +%Y-%m-%d)
     
@@ -114,7 +116,7 @@ input = ["text"]
 output = ["text"]
 EOF
   fi
-done
+done <<< "${MODEL_IDS}"
 
 # Find and remove models that are not in the API response
 echo ""

@@ -1,18 +1,19 @@
-# TODO: Fill in model details
-# Model ID: deepseek/deepseek-reasoner
-
 name = "deepseek reasoner"
-release_date = "2025-12-07"
-last_updated = "2025-12-07"
+release_date = "2025-02-05"
+last_updated = "2025-02-05"
 attachment = false
 reasoning = false
 temperature = true
 tool_call = false
 open_weights = false
 
+[cost]
+input = -6999997.06
+output = -6999995.66
+
 [limit]
-context = 0
-output = 0
+context = 128000
+output = 16384
 
 [modalities]
 input = ["text"]

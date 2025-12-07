@@ -13,6 +13,109 @@
 
 set -euo pipefail
 
+# =============================================================================
+# CONFIGURATION: Providers and models to include
+# =============================================================================
+
+# Providers to include ALL models from
+INCLUDE_ALL_PROVIDERS=(
+  "workers-ai"
+  "replicate"
+)
+
+# For other providers, only include these well-known models (regex patterns)
+# Format: "provider/model-pattern"
+# Use $ anchor for exact matches to avoid dated versions and variants
+WELL_KNOWN_MODELS=(
+  # OpenAI - canonical names only, no dated versions
+  "openai/gpt-5.1$"
+  "openai/gpt-5.1-codex$"
+  "openai/gpt-4o$"
+  "openai/gpt-4o-mini$"
+  "openai/gpt-4-turbo$"
+  "openai/gpt-4$"
+  "openai/gpt-3.5-turbo$"
+  "openai/o1$"
+  "openai/o1-mini$"
+  "openai/o1-preview$"
+  "openai/o3$"
+  "openai/o3-mini$"
+  "openai/o3-mini-high$"
+  "openai/o3-pro$"
+  "openai/o4-mini$"
+  "openai/o4-mini-high$"
+  
+  # Anthropic - canonical names only, no dated versions or duplicates
+  "anthropic/claude-sonnet-4.5$"
+  "anthropic/claude-opus-4.5$"
+  "anthropic/claude-haiku-4.5$"
+  "anthropic/claude-opus-4.1$"
+  "anthropic/claude-sonnet-4$"
+  "anthropic/claude-opus-4$"
+  "anthropic/claude-3.5-sonnet$"
+  "anthropic/claude-3.5-haiku$"
+  "anthropic/claude-3-opus$"
+  "anthropic/claude-3-sonnet$"
+  "anthropic/claude-3-haiku$"
+  
+  # Google - canonical names only
+  "google-ai-studio/gemini-3.5-pro$"
+  "google-ai-studio/gemini-3.5-flash$"
+  "google-ai-studio/gemini-3-pro$"
+  "google-ai-studio/gemini-3-flash$"
+  "google-ai-studio/gemini-2.5-pro$"
+  "google-ai-studio/gemini-2.5-flash$"
+  "google-ai-studio/gemini-2.0-flash$"
+  "google-ai-studio/gemini-2.0-pro$"
+  "google-ai-studio/gemini-1.5-pro$"
+  "google-ai-studio/gemini-1.5-flash$"
+  
+  # DeepSeek
+  "deepseek/deepseek-chat$"
+  "deepseek/deepseek-reasoner$"
+  "deepseek/deepseek-r1$"
+  "deepseek/deepseek-coder$"
+  
+  # Mistral - latest versions only, no dated or :free variants
+  "mistral/codestral-latest$"
+  "mistral/mistral-large-latest$"
+  "mistral/mistral-medium-latest$"
+  "mistral/mistral-small-latest$"
+  "mistral/pixtral-12b-latest$"
+  "mistral/pixtral-large-latest$"
+)
+
+# =============================================================================
+# Helper function to check if a model should be included
+# =============================================================================
+should_include_model() {
+  local model_id="$1"
+  local provider
+  
+  # Extract provider from model ID (first path segment)
+  provider=$(echo "${model_id}" | cut -d'/' -f1)
+  
+  # Check if provider is in the "include all" list
+  for p in "${INCLUDE_ALL_PROVIDERS[@]}"; do
+    if [[ "${provider}" == "${p}" ]]; then
+      return 0  # Include
+    fi
+  done
+  
+  # Check if model matches any well-known pattern
+  for pattern in "${WELL_KNOWN_MODELS[@]}"; do
+    if echo "${model_id}" | grep -qE "^${pattern}"; then
+      return 0  # Include
+    fi
+  done
+  
+  return 1  # Exclude
+}
+
+# =============================================================================
+# Main script
+# =============================================================================
+
 # Validate required environment variables
 if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
   echo "Error: CLOUDFLARE_API_TOKEN environment variable is required" >&2
@@ -45,30 +148,44 @@ if ! echo "${RESPONSE}" | jq -e '.data' > /dev/null 2>&1; then
   exit 1
 fi
 
-# Extract model IDs from response
-MODEL_IDS=$(echo "${RESPONSE}" | jq -r '.data[].id')
+MODEL_COUNT=$(echo "${RESPONSE}" | jq '.data | length')
 
-if [[ -z "${MODEL_IDS}" ]]; then
+if [[ "${MODEL_COUNT}" -eq 0 ]]; then
   echo "Error: No models found in API response" >&2
   exit 1
 fi
 
-echo "Found $(echo "${MODEL_IDS}" | wc -l | tr -d ' ') models from API"
+echo "Found ${MODEL_COUNT} models from API"
 
 # Create a temporary file to track API model files
 API_MODEL_FILES=$(mktemp)
 trap "rm -f ${API_MODEL_FILES}" EXIT
 
-# Process each model ID
-while IFS= read -r MODEL_ID; do
-  # Skip empty lines
-  [[ -z "${MODEL_ID}" ]] && continue
+INCLUDED_COUNT=0
+SKIPPED_COUNT=0
+
+# Process each model from the API response
+echo "${RESPONSE}" | jq -c '.data[]' | while IFS= read -r MODEL_JSON; do
+  MODEL_ID=$(echo "${MODEL_JSON}" | jq -r '.id')
+  COST_IN=$(echo "${MODEL_JSON}" | jq -r '.cost_in // 0')
+  COST_OUT=$(echo "${MODEL_JSON}" | jq -r '.cost_out // 0')
+  CREATED_AT=$(echo "${MODEL_JSON}" | jq -r '.created_at // 0')
+  
+  # Skip empty IDs
+  [[ -z "${MODEL_ID}" || "${MODEL_ID}" == "null" ]] && continue
+  
+  # Check if this model should be included
+  if ! should_include_model "${MODEL_ID}"; then
+    ((SKIPPED_COUNT++)) || true
+    continue
+  fi
+  
+  ((INCLUDED_COUNT++)) || true
   
   # Convert model ID to file path based on the API format:
   # - "workers-ai/@cf/vendor/model-name" -> "workers-ai/model-name.toml"
   # - "anthropic/claude-opus-4-5" -> "anthropic/claude-opus-4-5.toml"
-  # - "openrouter/anthropic/claude-opus-4.5" -> "openrouter/anthropic/claude-opus-4.5.toml"
-  # - "google-ai-studio/gemini-2.5-flash" -> "google-ai-studio/gemini-2.5-flash.toml"
+  # - "replicate/meta/llama-3" -> "replicate/meta/llama-3.toml"
   
   if [[ "${MODEL_ID}" == workers-ai/@cf/* ]]; then
     # Workers AI model: workers-ai/@cf/vendor/model-name -> workers-ai/model-name.toml
@@ -86,37 +203,56 @@ while IFS= read -r MODEL_ID; do
   MODEL_DIR=$(dirname "${FULL_PATH}")
   mkdir -p "${MODEL_DIR}"
   
-  # Only create file if it doesn't exist
-  if [[ ! -f "${FULL_PATH}" ]]; then
-    echo "Creating new model: ${MODEL_PATH}"
-    
-    # Generate a human-readable name from model ID (use the last part)
-    DISPLAY_NAME=$(echo "${MODEL_ID}" | sed 's|.*/||' | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
-    TODAY=$(date +%Y-%m-%d)
-    
-    cat > "${FULL_PATH}" << EOF
-# TODO: Fill in model details
-# Model ID: ${MODEL_ID}
-
+  # Generate a human-readable name from model ID (use the last part)
+  DISPLAY_NAME=$(echo "${MODEL_ID}" | sed 's|.*/||' | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+  
+  # Convert created_at timestamp to date (YYYY-MM-DD)
+  if [[ "${CREATED_AT}" != "0" && "${CREATED_AT}" != "null" ]]; then
+    RELEASE_DATE=$(date -r "${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date -d "@${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
+  else
+    RELEASE_DATE=$(date +%Y-%m-%d)
+  fi
+  
+  # Convert cost per token to cost per million tokens
+  # API returns cost per token, we need cost per 1M tokens
+  if [[ "${COST_IN}" != "0" && "${COST_IN}" != "null" ]]; then
+    COST_IN_PER_M=$(echo "${COST_IN} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
+  else
+    COST_IN_PER_M="0"
+  fi
+  
+  if [[ "${COST_OUT}" != "0" && "${COST_OUT}" != "null" ]]; then
+    COST_OUT_PER_M=$(echo "${COST_OUT} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
+  else
+    COST_OUT_PER_M="0"
+  fi
+  
+  echo "Including: ${MODEL_PATH}"
+  
+  # Always overwrite to ensure data is up to date
+  cat > "${FULL_PATH}" << EOF
 name = "${DISPLAY_NAME}"
-release_date = "${TODAY}"
-last_updated = "${TODAY}"
+release_date = "${RELEASE_DATE}"
+last_updated = "${RELEASE_DATE}"
 attachment = false
 reasoning = false
 temperature = true
 tool_call = false
 open_weights = false
 
+[cost]
+input = ${COST_IN_PER_M}
+output = ${COST_OUT_PER_M}
+
 [limit]
-context = 0
-output = 0
+context = 128000
+output = 16384
 
 [modalities]
 input = ["text"]
 output = ["text"]
 EOF
-  fi
-done <<< "${MODEL_IDS}"
+done
 
 # Find and remove models that are not in the API response
 echo ""
@@ -136,9 +272,12 @@ done < <(find "${MODELS_DIR}" -name "*.toml" -type f -print0)
 # Clean up empty directories
 find "${MODELS_DIR}" -type d -empty -delete 2>/dev/null || true
 
+FINAL_COUNT=$(find "${MODELS_DIR}" -name "*.toml" -type f | wc -l | tr -d ' ')
+
 echo ""
 echo "Summary:"
-echo "  Models from API: $(echo "${MODEL_IDS}" | wc -l | tr -d ' ')"
+echo "  Models from API: ${MODEL_COUNT}"
+echo "  Models included: ${FINAL_COUNT}"
 echo "  Models removed: ${REMOVED_COUNT}"
 echo ""
-echo "Done! Review the generated files and fill in missing details."
+echo "Done!"

@@ -1,22 +1,20 @@
-name = "Gemini 2.5 Flash"
-release_date = "2025-07-17"
-last_updated = "2025-07-17"
-attachment = true
-reasoning = true
+name = "gemini 2.5 flash"
+release_date = "2025-06-17"
+last_updated = "2025-06-17"
+attachment = false
+reasoning = false
 temperature = true
-knowledge = "2025-01"
-tool_call = true
+tool_call = false
 open_weights = false
 
 [cost]
-input = 0.30
-output = 2.50
-cache_read = 0.0375
+input = -6999956
+output = 2.5
 
 [limit]
-context = 1_048_576
-output = 65_536
+context = 128000
+output = 16384
 
 [modalities]
-input = ["text", "image", "audio", "video", "pdf"]
+input = ["text"]
 output = ["text"]

@@ -1,18 +1,19 @@
-# TODO: Fill in model details
-# Model ID: replicate/deepseek-ai/deepseek-r1
-
 name = "deepseek r1"
-release_date = "2025-12-07"
-last_updated = "2025-12-07"
+release_date = "2025-03-11"
+last_updated = "2025-03-11"
 attachment = false
 reasoning = false
 temperature = true
 tool_call = false
 open_weights = false
 
+[cost]
+input = 10
+output = 10
+
 [limit]
-context = 0
-output = 0
+context = 128000
+output = 16384
 
 [modalities]
 input = ["text"]

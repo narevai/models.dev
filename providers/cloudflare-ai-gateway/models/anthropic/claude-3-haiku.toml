@@ -8,7 +8,7 @@ tool_call = false
 open_weights = false
 
 [cost]
-input = -6999997.36
+input = 0
 output = 1.25
 
 [limit]

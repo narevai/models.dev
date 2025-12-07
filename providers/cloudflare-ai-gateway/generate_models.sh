@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Generate model TOML files for Cloudflare AI Gateway
 #
@@ -11,19 +11,19 @@
 #   CLOUDFLARE_API_TOKEN=xxx CLOUDFLARE_ACCOUNT_ID=xxx CLOUDFLARE_GATEWAY_ID=xxx ./generate_models.sh
 #
 
-set -euo pipefail
+set -eo pipefail
 
 # =============================================================================
 # CONFIGURATION: Providers and models to include
 # =============================================================================
 
-# Providers to include ALL models from
-INCLUDE_ALL_PROVIDERS=(
-  "workers-ai"
-  "replicate"
-)
+# Providers to include ALL models from (generated with defaults)
+INCLUDE_ALL_PROVIDERS="workers-ai replicate"
 
-# For other providers, only include these well-known models (regex patterns)
+# Providers to cross-reference from source provider files
+CROSS_REFERENCE_PROVIDERS="openai anthropic"
+
+# For cross-referenced providers, only include these well-known models (regex patterns)
 # Format: "provider/model-pattern"
 # Use $ anchor for exact matches to avoid dated versions and variants
 WELL_KNOWN_MODELS=(
@@ -40,10 +40,8 @@ WELL_KNOWN_MODELS=(
   "openai/o1-preview$"
   "openai/o3$"
   "openai/o3-mini$"
-  "openai/o3-mini-high$"
   "openai/o3-pro$"
   "openai/o4-mini$"
-  "openai/o4-mini-high$"
   
   # Anthropic - canonical names only, no dated versions or duplicates
   "anthropic/claude-sonnet-4.5$"
@@ -57,33 +55,29 @@ WELL_KNOWN_MODELS=(
   "anthropic/claude-3-opus$"
   "anthropic/claude-3-sonnet$"
   "anthropic/claude-3-haiku$"
-  
-  # Google - canonical names only
-  "google-ai-studio/gemini-3.5-pro$"
-  "google-ai-studio/gemini-3.5-flash$"
-  "google-ai-studio/gemini-3-pro$"
-  "google-ai-studio/gemini-3-flash$"
-  "google-ai-studio/gemini-2.5-pro$"
-  "google-ai-studio/gemini-2.5-flash$"
-  "google-ai-studio/gemini-2.0-flash$"
-  "google-ai-studio/gemini-2.0-pro$"
-  "google-ai-studio/gemini-1.5-pro$"
-  "google-ai-studio/gemini-1.5-flash$"
-  
-  # DeepSeek
-  "deepseek/deepseek-chat$"
-  "deepseek/deepseek-reasoner$"
-  "deepseek/deepseek-r1$"
-  "deepseek/deepseek-coder$"
-  
-  # Mistral - latest versions only, no dated or :free variants
-  "mistral/codestral-latest$"
-  "mistral/mistral-large-latest$"
-  "mistral/mistral-medium-latest$"
-  "mistral/mistral-small-latest$"
-  "mistral/pixtral-12b-latest$"
-  "mistral/pixtral-large-latest$"
 )
+
+# =============================================================================
+# Helper function to get mapped model name for source file lookup
+# =============================================================================
+get_mapped_name() {
+  local model_name="$1"
+  case "${model_name}" in
+    # Anthropic mappings (Cloudflare uses dots, source uses dashes)
+    "claude-sonnet-4.5") echo "claude-sonnet-4-5" ;;
+    "claude-opus-4.5") echo "claude-opus-4-5" ;;
+    "claude-haiku-4.5") echo "claude-haiku-4-5" ;;
+    "claude-opus-4.1") echo "claude-opus-4-1" ;;
+    "claude-sonnet-4") echo "claude-sonnet-4-0" ;;
+    "claude-opus-4") echo "claude-opus-4-0" ;;
+    "claude-3.5-sonnet") echo "claude-3-5-sonnet-20241022" ;;
+    "claude-3.5-haiku") echo "claude-3-5-haiku-latest" ;;
+    "claude-3-opus") echo "claude-3-opus-20240229" ;;
+    "claude-3-sonnet") echo "claude-3-sonnet-20240229" ;;
+    "claude-3-haiku") echo "claude-3-haiku-20240307" ;;
+    *) echo "${model_name}" ;;
+  esac
+}
 
 # =============================================================================
 # Helper function to check if a model should be included
@@ -96,7 +90,7 @@ should_include_model() {
   provider=$(echo "${model_id}" | cut -d'/' -f1)
   
   # Check if provider is in the "include all" list
-  for p in "${INCLUDE_ALL_PROVIDERS[@]}"; do
+  for p in ${INCLUDE_ALL_PROVIDERS}; do
     if [[ "${provider}" == "${p}" ]]; then
       return 0  # Include
     fi
@@ -110,6 +104,49 @@ should_include_model() {
   done
   
   return 1  # Exclude
+}
+
+# =============================================================================
+# Helper function to find source file for cross-referenced models
+# =============================================================================
+find_source_file() {
+  local provider="$1"
+  local model_name="$2"
+  
+  # Check if provider is in cross-reference list
+  local is_cross_ref=false
+  for p in ${CROSS_REFERENCE_PROVIDERS}; do
+    if [[ "${provider}" == "${p}" ]]; then
+      is_cross_ref=true
+      break
+    fi
+  done
+  
+  if [[ "${is_cross_ref}" != "true" ]]; then
+    return 1
+  fi
+  
+  # Get mapped name
+  local mapped_name
+  mapped_name=$(get_mapped_name "${model_name}")
+  
+  local source_file="${PROVIDERS_DIR}/${provider}/models/${mapped_name}.toml"
+  
+  if [[ -f "${source_file}" ]]; then
+    echo "${source_file}"
+    return 0
+  fi
+  
+  # Try original name if mapping didn't work
+  if [[ "${mapped_name}" != "${model_name}" ]]; then
+    source_file="${PROVIDERS_DIR}/${provider}/models/${model_name}.toml"
+    if [[ -f "${source_file}" ]]; then
+      echo "${source_file}"
+      return 0
+    fi
+  fi
+  
+  return 1
 }
 
 # =============================================================================
@@ -134,6 +171,7 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODELS_DIR="${SCRIPT_DIR}/models"
+PROVIDERS_DIR="${SCRIPT_DIR}/../.."
 
 # Fetch models from Cloudflare AI Gateway
 echo "Fetching models from Cloudflare AI Gateway..."
@@ -163,6 +201,7 @@ trap "rm -f ${API_MODEL_FILES}" EXIT
 
 INCLUDED_COUNT=0
 SKIPPED_COUNT=0
+CROSS_REF_COUNT=0
 
 # Process each model from the API response
 echo "${RESPONSE}" | jq -c '.data[]' | while IFS= read -r MODEL_JSON; do
@@ -181,6 +220,10 @@ echo "${RESPONSE}" | jq -c '.data[]' | while IFS= read -r MODEL_JSON; do
   fi
   
   ((INCLUDED_COUNT++)) || true
+  
+  # Extract provider and model name
+  PROVIDER=$(echo "${MODEL_ID}" | cut -d'/' -f1)
+  MODEL_NAME=$(echo "${MODEL_ID}" | cut -d'/' -f2-)
   
   # Convert model ID to file path based on the API format:
   # - "workers-ai/@cf/vendor/model-name" -> "workers-ai/model-name.toml"
@@ -203,34 +246,52 @@ echo "${RESPONSE}" | jq -c '.data[]' | while IFS= read -r MODEL_JSON; do
   MODEL_DIR=$(dirname "${FULL_PATH}")
   mkdir -p "${MODEL_DIR}"
   
-  # Generate a human-readable name from model ID (use the last part)
-  DISPLAY_NAME=$(echo "${MODEL_ID}" | sed 's|.*/||' | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+  # Check if we should cross-reference from source provider
+  SOURCE_FILE=$(find_source_file "${PROVIDER}" "${MODEL_NAME}" || true)
   
-  # Convert created_at timestamp to date (YYYY-MM-DD)
-  if [[ "${CREATED_AT}" != "0" && "${CREATED_AT}" != "null" ]]; then
-    RELEASE_DATE=$(date -r "${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date -d "@${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
+  if [[ -n "${SOURCE_FILE}" && -f "${SOURCE_FILE}" ]]; then
+    echo "Cross-referencing: ${MODEL_PATH} <- ${SOURCE_FILE#${PROVIDERS_DIR}/}"
+    cp "${SOURCE_FILE}" "${FULL_PATH}"
+    ((CROSS_REF_COUNT++)) || true
   else
-    RELEASE_DATE=$(date +%Y-%m-%d)
-  fi
-  
-  # Convert cost per token to cost per million tokens
-  # API returns cost per token, we need cost per 1M tokens
-  if [[ "${COST_IN}" != "0" && "${COST_IN}" != "null" ]]; then
-    COST_IN_PER_M=$(echo "${COST_IN} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
-  else
-    COST_IN_PER_M="0"
-  fi
-  
-  if [[ "${COST_OUT}" != "0" && "${COST_OUT}" != "null" ]]; then
-    COST_OUT_PER_M=$(echo "${COST_OUT} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
-  else
-    COST_OUT_PER_M="0"
-  fi
-  
-  echo "Including: ${MODEL_PATH}"
-  
-  # Always overwrite to ensure data is up to date
-  cat > "${FULL_PATH}" << EOF
+    # Generate file with defaults for workers-ai, replicate, etc.
+    echo "Generating: ${MODEL_PATH}"
+    
+    # Generate a human-readable name from model ID (use the last part)
+    DISPLAY_NAME=$(echo "${MODEL_ID}" | sed 's|.*/||' | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+    
+    # Convert created_at timestamp to date (YYYY-MM-DD)
+    if [[ "${CREATED_AT}" != "0" && "${CREATED_AT}" != "null" ]]; then
+      RELEASE_DATE=$(date -r "${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date -d "@${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
+    else
+      RELEASE_DATE=$(date +%Y-%m-%d)
+    fi
+    
+    # Convert cost per token to cost per million tokens
+    # API returns cost per token, we need cost per 1M tokens
+    # Treat negative or invalid costs as 0
+    if [[ "${COST_IN}" != "0" && "${COST_IN}" != "null" ]]; then
+      COST_IN_PER_M=$(echo "${COST_IN} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
+      # If negative, set to 0
+      if (( $(echo "${COST_IN_PER_M} < 0" | bc -l) )); then
+        COST_IN_PER_M="0"
+      fi
+    else
+      COST_IN_PER_M="0"
+    fi
+    
+    if [[ "${COST_OUT}" != "0" && "${COST_OUT}" != "null" ]]; then
+      COST_OUT_PER_M=$(echo "${COST_OUT} * 1000000" | bc -l | sed 's/^\./0./' | sed 's/0*$//' | sed 's/\.$//')
+      # If negative, set to 0
+      if (( $(echo "${COST_OUT_PER_M} < 0" | bc -l) )); then
+        COST_OUT_PER_M="0"
+      fi
+    else
+      COST_OUT_PER_M="0"
+    fi
+    
+    # Always overwrite to ensure data is up to date
+    cat > "${FULL_PATH}" << EOF
 name = "${DISPLAY_NAME}"
 release_date = "${RELEASE_DATE}"
 last_updated = "${RELEASE_DATE}"
@@ -252,6 +313,7 @@ output = 16384
 input = ["text"]
 output = ["text"]
 EOF
+  fi
 done
 
 # Find and remove models that are not in the API response

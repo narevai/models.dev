@@ -1,4 +1,4 @@
-name = "OpenAI GPT-5 Nano"
+name = "OpenAI: GPT-5 Codex"
 release_date = "2025-01-01"
 last_updated = "2025-01-01"
 attachment = false
@@ -9,14 +9,14 @@ knowledge = "2025-01"
 open_weights = false
 
 [cost]
-input = 0.049999999999999996
-output = 0.39999999999999997
-cache_read = 0.005
+input = 1.25
+output = 10
+cache_read = 0.12500000000000003
 
 [limit]
 context = 400000
 output = 128000
 
 [modalities]
-input = ["text", "image"]
+input = ["text"]
 output = ["text"]

@@ -1,19 +1,19 @@
-name = "DeepSeek R1 Distill Llama 70B"
-release_date = "2025-01-20"
-last_updated = "2025-01-20"
+name = "Perplexity Sonar Reasoning"
+release_date = "2025-01-27"
+last_updated = "2025-01-27"
 attachment = false
 reasoning = true
 temperature = true
-tool_call = true
+tool_call = false
 knowledge = "2025-01"
 open_weights = false
 
 [cost]
-input = 0.03
-output = 0.13
+input = 1
+output = 5
 
 [limit]
-context = 128000
+context = 127000
 output = 4096
 
 [modalities]

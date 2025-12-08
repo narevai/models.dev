@@ -1,22 +1,21 @@
-name = "OpenAI GPT-5 Nano"
+name = "OpenAI: GPT-5 Pro"
 release_date = "2025-01-01"
 last_updated = "2025-01-01"
 attachment = false
 reasoning = false
 temperature = false
-tool_call = true
+tool_call = false
 knowledge = "2025-01"
 open_weights = false
 
 [cost]
-input = 0.049999999999999996
-output = 0.39999999999999997
-cache_read = 0.005
+input = 15
+output = 120
 
 [limit]
-context = 400000
-output = 128000
+context = 128000
+output = 32768
 
 [modalities]
-input = ["text", "image"]
+input = ["text"]
 output = ["text"]

@@ -108,7 +108,8 @@ input_audio = 1.00          # Cost per million audio input tokens (USD)
 output_audio = 10.00        # Cost per million audio output tokens (USD)
 
 [limit]
-context = 200_000           # Maximum context window (tokens)
+context = 400_000           # Maximum context window (tokens)
+context = 272_000           # Maximum input tokens
 output = 8_192              # Maximum output tokens
 
 [modalities]
@@ -164,10 +165,13 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 - `cost.input_audio` _(optional)_: Number — Cost per million audio input tokens, if billed separately (USD)
 - `cost.output_audio` _(optional)_: Number — Cost per million audio output tokens, if billed separately (USD)
 - `limit.context`: Number — Maximum context window (tokens)
+- `limit.input`: Number — Maximum input tokens
 - `limit.output`: Number — Maximum output tokens
 - `modalities.input`: Array of strings — Supported input modalities (e.g., ["text", "image", "audio", "video", "pdf"])
 - `modalities.output`: Array of strings — Supported output modalities (e.g., ["text"])
-- `status` _(optional)_: Array of strings — Supported status:
+- `status` _(optional)_: String — Supported status:
+  - `alpha` - Indicate the model is in alpha testing
+  - `beta` - Indicate the model is in beta testing
   - `deprecated` - Indicate the model is no longer served by the provider's public API
 
 ### Examples

@@ -52,6 +52,7 @@ export const Model = z
     }).optional(),
     limit: z.object({
       context: z.number().min(0, "Context window must be positive"),
+      input: z.number().min(0, "Input tokens must be positive").optional(),
       output: z.number().min(0, "Output tokens must be positive"),
     }),
     status: z.enum(["alpha", "beta", "deprecated"]).optional(),

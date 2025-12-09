@@ -8,6 +8,7 @@ temperature = true
 open_weights = true
 release_date = "2023-12-02"
 last_updated = "2024-03-08"
+status = "deprecated"
 
 [cost]
 input = 0

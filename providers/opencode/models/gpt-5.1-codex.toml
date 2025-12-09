@@ -16,11 +16,12 @@ cache_read = 0.107
 
 [limit]
 context = 400_000
+input = 272_000
 output = 128_000
 
 [modalities]
 input = ["text", "image"]
-output = ["text", "image"]
+output = ["text"]
 
 [provider]
 npm = "@ai-sdk/openai"

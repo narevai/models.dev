@@ -2,7 +2,7 @@
 
 name = "@cf/openai/gpt-oss-20b"
 attachment = false
-reasoning = false
+reasoning = true
 tool_call = false
 temperature = false
 open_weights = true

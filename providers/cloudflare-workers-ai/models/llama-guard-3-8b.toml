@@ -14,7 +14,7 @@ input = 0.48
 output = 0.03
 
 [limit]
-context = 0
+context = 131072
 output = 0
 
 [modalities]

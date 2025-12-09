@@ -33,7 +33,7 @@ export const Model = z
         z.literal(true),
         z
           .object({
-            name: z.enum(["reasoning_content", "reasoning_details"]),
+            field: z.enum(["reasoning_content", "reasoning_details"]),
           })
           .strict(),
       ])

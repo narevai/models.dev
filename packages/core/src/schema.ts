@@ -28,6 +28,16 @@ export const Model = z
     attachment: z.boolean(),
     reasoning: z.boolean(),
     tool_call: z.boolean(),
+    interleaved: z
+      .union([
+        z.literal(true),
+        z
+          .object({
+            name: z.enum(["reasoning_content", "reasoning_details"]),
+          })
+          .strict(),
+      ])
+      .optional(),
     structured_output: z.boolean().optional(),
     temperature: z.boolean().optional(),
     knowledge: z

@@ -91,7 +91,6 @@ name = "Model Display Name"
 attachment = true           # or false - supports file attachments
 reasoning = false           # or true - supports reasoning / chain-of-thought
 tool_call = true            # or false - supports tool calling
-interleaved = true          # or { field = "reasoning_content" | "reasoning_details" }
 structured_output = true    # or false - supports a dedicated structured output feature
 temperature = true          # or false - supports temperature control
 knowledge = "2024-04"       # Knowledge-cutoff date
@@ -116,6 +115,9 @@ output = 8_192              # Maximum output tokens
 [modalities]
 input = ["text", "image"]   # Supported input modalities
 output = ["text"]           # Supported output modalities
+
+[interleaved]
+field = "reasoning_content" # Name of the interleaved field "reasoning_content" or "reasoning_details"
 ```
 
 #### 4. Submit a Pull Request
@@ -152,15 +154,16 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 - `attachment`: Boolean — Supports file attachments
 - `reasoning`: Boolean — Supports reasoning / chain-of-thought
 - `tool_call`: Boolean - Supports tool calling
-- `interleaved` _(optional)_: `true` for general support or an object with `field` set to either `reasoning_content" or `reasoning_details` to specify which stream is interleaved
 - `structured_output` _(optional)_: Boolean — Supports structured output feature
 - `temperature` _(optional)_: Boolean — Supports temperature control
 - `knowledge` _(optional)_: String — Knowledge-cutoff date in `YYYY-MM` or `YYYY-MM-DD` format
 - `release_date`: String — First public release date in `YYYY-MM` or `YYYY-MM-DD`
 - `last_updated`: String — Most recent update date in `YYYY-MM` or `YYYY-MM-DD`
 - `open_weights`: Boolean - Indicate the model's trained weights are publicly available
-- `cost.input` _(optional)_: Number — Cost per million input tokens (USD)
-- `cost.output` _(optional)_: Number — Cost per million output tokens (USD)
+- `interleaved` _(optional)_: Boolean or Object — Supports interleaved reasoning. Use `true` for general support or an object with `field` to specify the format
+- `interleaved.field`: String — Name of the interleaved field (`"reasoning_content"` or `"reasoning_details"`)
+- `cost.input`: Number — Cost per million input tokens (USD)
+- `cost.output`: Number — Cost per million output tokens (USD)
 - `cost.reasoning` _(optional)_: Number — Cost per million reasoning tokens (USD)
 - `cost.cache_read` _(optional)_: Number — Cost per million cached read tokens (USD)
 - `cost.cache_write` _(optional)_: Number — Cost per million cached write tokens (USD)

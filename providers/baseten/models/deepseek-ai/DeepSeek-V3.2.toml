@@ -8,6 +8,9 @@ knowledge = "2025-10"
 tool_call = true
 open_weights = true
 
+[interleaved]
+field = "reasoning_content"
+
 [limit]
 context = 163_800
 output = 131_100

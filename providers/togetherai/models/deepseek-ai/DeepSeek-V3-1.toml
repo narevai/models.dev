@@ -1,6 +1,6 @@
-name = "GPT OSS 120B"
-release_date = "2025-08-05"
-last_updated = "2025-08-05"
+name = "DeepSeek V3.1"
+release_date = "2025-08-21"
+last_updated = "2025-08-21"
 attachment = false
 reasoning = true
 temperature = true
@@ -9,12 +9,12 @@ knowledge = "2025-08"
 open_weights = true
 
 [cost]
-input = 0.15
-output = 0.60
+input = 0.6
+output = 1.7
 
 [limit]
 context = 131_072
-output = 131_072
+output = 12_288
 
 [modalities]
 input = ["text"]

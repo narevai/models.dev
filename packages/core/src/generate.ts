@@ -23,6 +23,11 @@ export async function generate(directory: string) {
     }
 
     const modelsPath = path.join(directory, providerID, "models");
+    const modelsStat = await Bun.file(modelsPath).stat();
+    if (!modelsStat.isDirectory()) {
+      result[providerID] = provider.data;
+      continue;
+    }
     for await (const modelPath of new Bun.Glob("**/*.toml").scan({
       cwd: modelsPath,
       absolute: true,

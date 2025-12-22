@@ -13,13 +13,22 @@
 set -eo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROVIDER_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 source "${SCRIPT_DIR}/utils.sh"
+
+# =============================================================================
+# Step 2: Update model names
+# =============================================================================
+
+echo ""
+echo "=== Step 2: Generating / adding missing model names ==="
 
 # =============================================================================
 # Main script
 # =============================================================================
-DATA_DIR="${SCRIPT_DIR}/data"
-MODEL_NAMES_FILE="${SCRIPT_DIR}/model_names.json"
+
+DATA_DIR="${PROVIDER_DIR}/data"
+MODEL_NAMES_FILE="${DATA_DIR}/model_names.json"
 API_RESPONSE_FILE="${DATA_DIR}/api_response.json"
 
 # Check if API response file exists

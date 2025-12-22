@@ -18,8 +18,19 @@
 
 set -eo pipefail
 
+# =============================================================================
+# Step 1: Fetch models from Cloudflare AI Gateway
+# =============================================================================
+
+echo "=== Step 1: Fetching models from Cloudflare AI Gateway ==="
+
+# =============================================================================
+# Main script
+# =============================================================================
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DATA_DIR="${SCRIPT_DIR}/data"
+PROVIDER_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+DATA_DIR="${PROVIDER_DIR}/data"
 API_RESPONSE_FILE="${DATA_DIR}/api_response.json"
 
 # Validate required environment variables
@@ -38,11 +49,6 @@ if [[ -z "${CLOUDFLARE_GATEWAY_ID:-}" ]]; then
   exit 1
 fi
 
-# =============================================================================
-# Step 1: Fetch models from Cloudflare AI Gateway
-# =============================================================================
-
-echo "=== Step 1: Fetching models from Cloudflare AI Gateway ==="
 API_URL="https://gateway.ai.cloudflare.com/v1/${CLOUDFLARE_ACCOUNT_ID}/${CLOUDFLARE_GATEWAY_ID}/compat/models"
 
 mkdir -p "${DATA_DIR}"
@@ -65,19 +71,3 @@ fi
 echo "Found ${MODEL_COUNT} models from API"
 echo "${RESPONSE}" > "${API_RESPONSE_FILE}"
 echo "Saved API response to ${API_RESPONSE_FILE}"
-
-# =============================================================================
-# Step 2: Update model names
-# =============================================================================
-
-echo ""
-echo "=== Step 2: Generating / adding missing model names ==="
-"${SCRIPT_DIR}/generate_model_names.sh"
-
-# =============================================================================
-# Step 3: Generate TOML files
-# =============================================================================
-
-echo ""
-echo "=== Step 3: Generating model TOML files ==="
-"${SCRIPT_DIR}/generate_model_toml.sh"

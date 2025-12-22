@@ -10,7 +10,7 @@ knowledge = "2025-04"
 open_weights = true
 
 [interleaved]
-field = "reasoning_content"
+field = "reasoning_details"
 
 [cost]
 input = 0.6
@@ -24,3 +24,6 @@ output = 131072
 [modalities]
 input = ["text"]
 output = ["text"]
+
+[provider]
+npm = "@openrouter/ai-sdk-provider"

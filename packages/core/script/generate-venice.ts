@@ -46,6 +46,7 @@ const Pricing = z
   .object({
     input: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough(),
     output: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough(),
+    cache_input: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough().optional(),
   })
   .passthrough();
 
@@ -203,6 +204,7 @@ interface MergedModel {
   cost?: {
     input: number;
     output: number;
+    cache_read?: number;
   };
   limit: {
     context: number;
@@ -273,6 +275,7 @@ function mergeModel(
     merged.cost = {
       input: spec.pricing.input.usd,
       output: spec.pricing.output.usd,
+      ...(spec.pricing.cache_input && { cache_read: spec.pricing.cache_input.usd }),
     };
   }
 
@@ -342,6 +345,9 @@ function formatToml(model: MergedModel): string {
     lines.push(`[cost]`);
     lines.push(`input = ${model.cost.input}`);
     lines.push(`output = ${model.cost.output}`);
+    if (model.cost.cache_read !== undefined) {
+      lines.push(`cache_read = ${model.cost.cache_read}`);
+    }
   }
 
   // Limit section
@@ -402,6 +408,7 @@ function detectChanges(
   compare("release_date", existing.release_date, merged.release_date);
   compare("cost.input", existing.cost?.input, merged.cost?.input);
   compare("cost.output", existing.cost?.output, merged.cost?.output);
+  compare("cost.cache_read", existing.cost?.cache_read, merged.cost?.cache_read);
   compare("limit.context", existing.limit?.context, merged.limit.context);
   compare("limit.output", existing.limit?.output, merged.limit.output);
   compare("modalities.input", existing.modalities?.input, merged.modalities.input);

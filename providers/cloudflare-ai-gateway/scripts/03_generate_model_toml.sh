@@ -83,21 +83,7 @@ while IFS= read -r MODEL_JSON; do
   # Extract provider and model name
   PROVIDER=$(echo "${MODEL_ID}" | cut -d'/' -f1)
   MODEL_NAME=$(echo "${MODEL_ID}" | cut -d'/' -f2-)
-  
-  # Convert model ID to file path based on the API format:
-  # - "workers-ai/@cf/vendor/model-name" -> "workers-ai/model-name.toml"
-  # - "anthropic/claude-3.5-haiku" -> "anthropic/claude-3.5-haiku.toml" (keep dots)
-  # - "openai/gpt-5.1" -> "openai/gpt-5.1.toml" (keep dots)
-  # IMPORTANT: Cloudflare uses dots in model IDs, so we preserve them
-  
-  if [[ "${MODEL_ID}" == workers-ai/@cf/* ]]; then
-    # Workers AI model: workers-ai/@cf/vendor/model-name -> workers-ai/model-name.toml
-    MODEL_NAME=$(echo "${MODEL_ID}" | sed 's|workers-ai/@cf/[^/]*/||')
-    MODEL_PATH="workers-ai/${MODEL_NAME}.toml"
-  else
-    # Keep the model ID as-is (Cloudflare uses dots in model names)
-    MODEL_PATH="${MODEL_ID}.toml"
-  fi
+  MODEL_PATH="${MODEL_ID}.toml"
   
   FULL_PATH="${MODELS_DIR}/${MODEL_PATH}"
   echo "${FULL_PATH}" >> "${API_MODEL_FILES}"

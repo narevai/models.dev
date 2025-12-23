@@ -114,6 +114,10 @@ should_include_model() {
   # Check if provider is in the "include all" list
   for p in ${INCLUDE_ALL_PROVIDERS}; do
     if [[ "${provider}" == "${p}" ]]; then
+      # Special case for workers-ai: only include models with workers-ai/@cf/ prefix
+      if [[ "${provider}" == "workers-ai" && "${model_id}" != "workers-ai/@cf/"* ]]; then
+        return 1  # Exclude workers-ai models that don't have @cf/ namespace
+      fi
       return 0  # Include
     fi
   done

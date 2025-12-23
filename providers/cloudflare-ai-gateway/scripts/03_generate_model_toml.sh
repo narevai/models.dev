@@ -29,6 +29,7 @@ MODELS_DIR="${PROVIDER_DIR}/models"
 DATA_DIR="${PROVIDER_DIR}/data"
 PROVIDERS_DIR="${PROVIDER_DIR}/.."
 MODEL_NAMES_FILE="${DATA_DIR}/model_names.json"
+MODEL_FAMILIES_FILE="${DATA_DIR}/model_families.json"
 API_RESPONSE_FILE="${DATA_DIR}/api_response.json"
 
 # Check if API response file exists
@@ -60,6 +61,32 @@ trap "rm -f ${API_MODEL_FILES}" EXIT
 GENERATED_COUNT=0
 SKIPPED_COUNT=0
 CROSS_REF_COUNT=0
+
+# =============================================================================
+# Helper function to get model family from mapping file
+# =============================================================================
+get_model_family() {
+  local model_id="$1"
+  
+  # Return empty if families file doesn't exist
+  if [[ ! -f "${MODEL_FAMILIES_FILE}" ]]; then
+    echo ""
+    return
+  fi
+  
+  # Try to match patterns in order
+  local family
+  family=$(jq -r --arg id "${model_id}" '
+    .patterns[] | .pattern as $p | .family as $f | select($id | test($p)) | $f
+  ' "${MODEL_FAMILIES_FILE}" | head -n 1)
+  
+  # Return family if found, empty otherwise
+  if [[ -n "${family}" && "${family}" != "null" ]]; then
+    echo "${family}"
+  else
+    echo ""
+  fi
+}
 
 # Process each model from the API response
 while IFS= read -r MODEL_JSON; do
@@ -116,6 +143,9 @@ while IFS= read -r MODEL_JSON; do
     # Escape double quotes for TOML string
     DISPLAY_NAME="${DISPLAY_NAME//\"/\\\"}"
     
+    # Get model family from mapping file
+    MODEL_FAMILY=$(get_model_family "${MODEL_ID}")
+    
     # Convert created_at timestamp to date (YYYY-MM-DD)
     if [[ "${CREATED_AT}" != "0" && "${CREATED_AT}" != "null" ]]; then
       RELEASE_DATE=$(date -r "${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date -d "@${CREATED_AT}" +%Y-%m-%d 2>/dev/null || date +%Y-%m-%d)
@@ -147,10 +177,15 @@ while IFS= read -r MODEL_JSON; do
     fi
     
     # Always overwrite to ensure data is up to date
-    cat > "${FULL_PATH}" << EOF
-name = "${DISPLAY_NAME}"
-release_date = "${RELEASE_DATE}"
-last_updated = "${RELEASE_DATE}"
+    # Build the TOML content with optional family field
+    TOML_CONTENT="name = \"${DISPLAY_NAME}\""
+    if [[ -n "${MODEL_FAMILY}" ]]; then
+      TOML_CONTENT="${TOML_CONTENT}
+family = \"${MODEL_FAMILY}\""
+    fi
+    TOML_CONTENT="${TOML_CONTENT}
+release_date = \"${RELEASE_DATE}\"
+last_updated = \"${RELEASE_DATE}\"
 attachment = false
 reasoning = false
 temperature = true
@@ -166,9 +201,10 @@ context = 128000
 output = 16384
 
 [modalities]
-input = ["text"]
-output = ["text"]
-EOF
+input = [\"text\"]
+output = [\"text\"]"
+    
+    echo "${TOML_CONTENT}" > "${FULL_PATH}"
   fi
 done < <(jq -c '.data[]' "${API_RESPONSE_FILE}")
 

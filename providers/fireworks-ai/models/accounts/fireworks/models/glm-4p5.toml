@@ -20,3 +20,6 @@ output = 131_072
 [modalities]
 input = ["text"]
 output = ["text"]
+
+[interleaved]
+field = "reasoning_content"

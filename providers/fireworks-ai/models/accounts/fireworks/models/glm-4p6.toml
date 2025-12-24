@@ -21,3 +21,6 @@ output = 198_000
 [modalities]
 input = ["text"]
 output = ["text"]
+
+[interleaved]
+field = "reasoning_content"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-import { readdir } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
 
@@ -410,14 +410,14 @@ async function main() {
 
   const apiModels = parsed.data.data;
 
-  // Get existing files
+  // Get existing files (recursively)
   const existingFiles = new Set<string>();
   try {
-    const files = await readdir(modelsDir);
-    for (const file of files) {
-      if (file.endsWith(".toml")) {
-        existingFiles.add(file);
-      }
+    for await (const file of new Bun.Glob("**/*.toml").scan({
+      cwd: modelsDir,
+      absolute: false,
+    })) {
+      existingFiles.add(file);
     }
   } catch {
     // Directory might not exist yet
@@ -435,41 +435,40 @@ async function main() {
   let unchanged = 0;
 
   for (const apiModel of apiModels) {
-    const safeId = apiModel.id.replace(/\//g, "-");
-    const filename = `${safeId}.toml`;
-    const filePath = path.join(modelsDir, filename);
+    const relativePath = `${apiModel.id}.toml`;
+    const filePath = path.join(modelsDir, relativePath);
+    const dirPath = path.dirname(filePath);
 
-    apiModelIds.add(filename);
+    apiModelIds.add(relativePath);
 
     const existing = await loadExistingModel(filePath);
     const merged = mergeModel(apiModel, existing);
     const tomlContent = formatToml(merged);
 
     if (existing === null) {
-      // New file
       created++;
       if (dryRun) {
-        console.log(`[DRY RUN] Would create: ${filename}`);
+        console.log(`[DRY RUN] Would create: ${relativePath}`);
         console.log(`  name = "${merged.name}"`);
         if (merged.family) {
           console.log(`  family = "${merged.family}" (inferred)`);
         }
         console.log("");
       } else {
+        await mkdir(dirPath, { recursive: true });
         await Bun.write(filePath, tomlContent);
-        console.log(`Created: ${filename}`);
+        console.log(`Created: ${relativePath}`);
       }
     } else {
-      // Check for changes
       const changes = detectChanges(existing, merged);
 
       if (changes.length > 0) {
         updated++;
         if (dryRun) {
-          console.log(`[DRY RUN] Would update: ${filename}`);
+          console.log(`[DRY RUN] Would update: ${relativePath}`);
         } else {
           await Bun.write(filePath, tomlContent);
-          console.log(`Updated: ${filename}`);
+          console.log(`Updated: ${relativePath}`);
         }
         for (const change of changes) {
           console.log(`  ${change.field}: ${change.oldValue} → ${change.newValue}`);

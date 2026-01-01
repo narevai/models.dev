@@ -1,0 +1,16 @@
+name = "glm-4.6v"
+release_date = "2025-12-09"
+last_updated = "2025-12-09"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

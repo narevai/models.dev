@@ -1,0 +1,16 @@
+name = "trellis-3d"
+release_date = "2025-03-27"
+last_updated = "2025-03-27"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text"]
+output = ["image"]

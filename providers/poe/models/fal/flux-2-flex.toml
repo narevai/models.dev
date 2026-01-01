@@ -1,0 +1,16 @@
+name = "flux-2-flex"
+release_date = "2025-11-25"
+last_updated = "2025-11-25"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text", "image"]
+output = ["image"]

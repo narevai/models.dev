@@ -1,0 +1,16 @@
+name = "qwen2.5-vl-72b-t"
+release_date = "2025-03-31"
+last_updated = "2025-03-31"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 32_768
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

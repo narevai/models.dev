@@ -1,0 +1,16 @@
+name = "phi-4-di"
+release_date = "2025-02-25"
+last_updated = "2025-02-25"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 16_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

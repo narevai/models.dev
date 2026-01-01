@@ -1,0 +1,16 @@
+name = "llama-3-70b-t"
+release_date = "2024-04-18"
+last_updated = "2024-04-18"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 8_192
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

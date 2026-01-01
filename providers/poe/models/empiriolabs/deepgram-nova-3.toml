@@ -1,0 +1,16 @@
+name = "deepgram-nova-3"
+release_date = "2025-07-30"
+last_updated = "2025-07-30"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

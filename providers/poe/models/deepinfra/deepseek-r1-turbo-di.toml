@@ -1,0 +1,16 @@
+name = "deepseek-r1-turbo-di"
+release_date = "2025-03-06"
+last_updated = "2025-03-06"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 32_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

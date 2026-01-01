@@ -1,0 +1,16 @@
+name = "llama-4-scout-t"
+release_date = "2025-04-05"
+last_updated = "2025-04-05"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 300_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

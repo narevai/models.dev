@@ -1,0 +1,20 @@
+name = "mistral-large-2"
+release_date = "2024-02-26"
+last_updated = "2024-02-26"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[cost]
+input = 3
+output = 9
+
+[limit]
+context = 128_000
+output = null
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

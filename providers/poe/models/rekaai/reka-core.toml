@@ -1,0 +1,16 @@
+name = "reka-core"
+release_date = "2024-04-13"
+last_updated = "2024-04-13"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 128_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

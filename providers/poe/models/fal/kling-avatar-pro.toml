@@ -1,0 +1,16 @@
+name = "kling-avatar-pro"
+release_date = "2025-09-26"
+last_updated = "2025-09-26"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text", "image", "audio"]
+output = ["video"]

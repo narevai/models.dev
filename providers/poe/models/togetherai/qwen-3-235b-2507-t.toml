@@ -1,0 +1,16 @@
+name = "qwen-3-235b-2507-t"
+release_date = "2025-04-30"
+last_updated = "2025-04-30"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 40_960
+output = null
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

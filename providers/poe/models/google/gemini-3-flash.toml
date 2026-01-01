@@ -1,0 +1,21 @@
+name = "gemini-3-flash"
+release_date = "2025-10-07"
+last_updated = "2025-10-07"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[cost]
+input = 0.4
+output = 2.4
+cache_read = 0.04
+
+[limit]
+context = 1_048_576
+output = null
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["text"]

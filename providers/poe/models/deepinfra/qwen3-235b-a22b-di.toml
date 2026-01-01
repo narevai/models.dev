@@ -1,0 +1,16 @@
+name = "qwen3-235b-a22b-di"
+release_date = "2025-04-30"
+last_updated = "2025-04-30"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 32_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

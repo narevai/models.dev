@@ -1,0 +1,16 @@
+name = "qwen3-next-think-t"
+release_date = "2025-10-01"
+last_updated = "2025-10-01"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

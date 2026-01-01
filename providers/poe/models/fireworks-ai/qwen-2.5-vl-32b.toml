@@ -1,0 +1,16 @@
+name = "qwen-2.5-vl-32b"
+release_date = "2025-04-01"
+last_updated = "2025-04-01"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 32_768
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

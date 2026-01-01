@@ -1,0 +1,16 @@
+name = "mistral-7b-v0.3-di"
+release_date = "2025-02-25"
+last_updated = "2025-02-25"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = 32_000
+output = null
+
+[modalities]
+input = ["text"]
+output = ["text"]

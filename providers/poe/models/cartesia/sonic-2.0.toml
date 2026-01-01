@@ -1,0 +1,16 @@
+name = "sonic-2.0"
+release_date = "2024-11-18"
+last_updated = "2024-11-18"
+attachment = true
+reasoning = null
+temperature = false
+open_weights = false
+tool_call = null
+
+[limit]
+context = null
+output = null
+
+[modalities]
+input = ["text"]
+output = ["audio"]

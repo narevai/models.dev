@@ -15,8 +15,8 @@ cache_read = 0.11
 cache_write = 0
 
 [limit]
-context = 204_800
-output = 204_800
+context = 204800
+output = 131072
 
 [modalities]
 input = ["text"]

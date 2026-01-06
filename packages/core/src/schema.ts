@@ -105,6 +105,7 @@ export const Provider = z
   .strict()
   .refine(
     (data) => {
+      const isOpenAI = data.npm === "@ai-sdk/openai";
       const isOpenAIcompatible = data.npm === "@ai-sdk/openai-compatible";
       const isOpenrouter = data.npm === "@openrouter/ai-sdk-provider";
       const isAnthropic = data.npm === "@ai-sdk/anthropic";
@@ -117,13 +118,15 @@ export const Provider = z
         (isOpenrouter && hasApi) ||
         // anthropic: api optional (always allowed)
         isAnthropic ||
+        // openai: api optional (always allowed)
+        isOpenAI ||
         // all others: must NOT have api
-        (!isOpenAIcompatible && !isOpenrouter && !isAnthropic && !hasApi)
+        (!isOpenAI && !isOpenAIcompatible && !isOpenrouter && !isAnthropic && !hasApi)
       );
     },
     {
       message:
-        "'api' is required for openai-compatible and openrouter, optional for anthropic, forbidden otherwise",
+        "'api' is required for openai-compatible and openrouter, optional for anthropic and openai, forbidden otherwise",
       path: ["api"],
     },
   );

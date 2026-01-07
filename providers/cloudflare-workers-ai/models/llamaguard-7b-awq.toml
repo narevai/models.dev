@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/llamaguard-7b-awq/
 
 name = "@hf/thebloke/llamaguard-7b-awq"
+family = "llama"
 attachment = false
 reasoning = false
 tool_call = true
@@ -8,6 +9,7 @@ temperature = true
 open_weights = true
 release_date = "2023-12-11"
 last_updated = "2023-12-11"
+status = "deprecated"
 
 [cost]
 input = 0

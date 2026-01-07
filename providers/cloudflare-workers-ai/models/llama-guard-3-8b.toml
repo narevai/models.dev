@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/llama-guard-3-8b/
 
 name = "@cf/meta/llama-guard-3-8b"
+family = "llama"
 attachment = false
 reasoning = false
 tool_call = false
@@ -14,7 +15,7 @@ input = 0.48
 output = 0.03
 
 [limit]
-context = 0
+context = 131072
 output = 0
 
 [modalities]

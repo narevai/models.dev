@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/deepseek-coder-6.7b-instruct-awq/
 
 name = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
+family = "deepseek-coder"
 attachment = false
 reasoning = false
 tool_call = true
@@ -8,6 +9,7 @@ temperature = true
 open_weights = true
 release_date = "2023-11-05"
 last_updated = "2023-11-13"
+status = "deprecated"
 
 [cost]
 input = 0

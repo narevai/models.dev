@@ -1,4 +1,5 @@
 name = "Claude Opus 4 Search"
+family = "claude-opus"
 release_date = "2025-06-20"
 last_updated = "2025-06-20"
 attachment = true
@@ -18,5 +19,5 @@ context = 196_608
 output = 128_000
 
 [modalities]
-input = ["text", "image"]
+input = ["text", "image", "pdf"]
 output = ["text"]

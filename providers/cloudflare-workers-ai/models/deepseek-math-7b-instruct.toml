@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/deepseek-math-7b-instruct/
 
 name = "@cf/deepseek-ai/deepseek-math-7b-instruct"
+family = "deepseek"
 attachment = false
 reasoning = false
 tool_call = true
@@ -8,6 +9,7 @@ temperature = true
 open_weights = true
 release_date = "2024-02-05"
 last_updated = "2024-02-06"
+status = "deprecated"
 
 [cost]
 input = 0

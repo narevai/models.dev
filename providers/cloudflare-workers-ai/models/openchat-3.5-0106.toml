@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/openchat-3.5-0106/
 
 name = "@cf/openchat/openchat-3.5-0106"
+family = "openchat"
 attachment = false
 reasoning = false
 tool_call = true
@@ -8,6 +9,7 @@ temperature = true
 open_weights = true
 release_date = "2024-01-07"
 last_updated = "2024-05-18"
+status = "deprecated"
 
 [cost]
 input = 0

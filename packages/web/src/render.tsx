@@ -207,7 +207,7 @@ export const Rendered = renderToString(
           </svg>
         </a>
         <div class="search-container">
-          <input type="text" id="search" placeholder="Filter by model" />
+          <input type="text" id="search" placeholder="Search models" />
           <span class="search-shortcut">⌘K</span>
         </div>
         <button id="help">How to use</button>
@@ -221,6 +221,9 @@ export const Rendered = renderToString(
           </th>
           <th class="sortable" data-type="text">
             Model <span class="sort-indicator"></span>
+          </th>
+          <th class="sortable" data-type="text">
+            Family <span class="sort-indicator"></span>
           </th>
           <th class="sortable" data-type="text">
             Provider ID <span class="sort-indicator"></span>
@@ -314,6 +317,9 @@ export const Rendered = renderToString(
             Context Limit <span class="sort-indicator"></span>
           </th>
           <th class="sortable" data-type="number">
+            Input Limit <span class="sort-indicator"></span>
+          </th>
+          <th class="sortable" data-type="number">
             Output Limit <span class="sort-indicator"></span>
           </th>
           <th class="sortable" data-type="boolean">
@@ -356,6 +362,7 @@ export const Rendered = renderToString(
                     </div>
                   </td>
                   <td>{model.name}</td>
+                  <td>{model.family ?? "-"}</td>
                   <td>{providerId}</td>
                   <td>
                     <div class="model-id-cell">
@@ -428,8 +435,15 @@ export const Rendered = renderToString(
                   <td>{renderCost(model.cost?.input_audio)}</td>
                   <td>{renderCost(model.cost?.output_audio)}</td>
                   <td>{model.limit.context.toLocaleString()}</td>
+                  <td>{model.limit.input?.toLocaleString() ?? "-"}</td>
                   <td>{model.limit.output.toLocaleString()}</td>
-                  <td>{model.structured_output === undefined ? "-" : model.structured_output ? "Yes" : "No"}</td>
+                  <td>
+                    {model.structured_output === undefined
+                      ? "-"
+                      : model.structured_output
+                      ? "Yes"
+                      : "No"}
+                  </td>
                   <td>{model.temperature ? "Yes" : "No"}</td>
                   <td>{model.open_weights ? "Open" : "Closed"}</td>
                   <td>

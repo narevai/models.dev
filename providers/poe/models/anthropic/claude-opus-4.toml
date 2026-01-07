@@ -1,4 +1,5 @@
 name = "Claude Opus 4"
+family = "claude-opus"
 release_date = "2025-05-21"
 last_updated = "2025-05-21"
 attachment = true
@@ -18,5 +19,5 @@ context = 192_512
 output = 32_768
 
 [modalities]
-input = ["text", "image"]
+input = ["text", "image", "pdf"]
 output = ["text"]

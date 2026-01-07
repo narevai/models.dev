@@ -1,0 +1,22 @@
+name = "Hermes 3 Llama 3.1 405b"
+family = "llama-3.1"
+attachment = false
+reasoning = false
+tool_call = false
+temperature = true
+knowledge = "2024-04"
+release_date = "2025-09-25"
+last_updated = "2025-12-29"
+open_weights = true
+
+[cost]
+input = 1.1
+output = 3
+
+[limit]
+context = 131_072
+output = 32_768
+
+[modalities]
+input = ["text"]
+output = ["text"]

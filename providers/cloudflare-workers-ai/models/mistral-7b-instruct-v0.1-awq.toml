@@ -1,6 +1,7 @@
 # https://developers.cloudflare.com/workers-ai/models/mistral-7b-instruct-v0.1-awq/
 
 name = "@hf/thebloke/mistral-7b-instruct-v0.1-awq"
+family = "mistral-7b"
 attachment = false
 reasoning = false
 tool_call = true
@@ -8,6 +9,7 @@ temperature = true
 open_weights = true
 release_date = "2023-09-27"
 last_updated = "2023-11-09"
+status = "deprecated"
 
 [cost]
 input = 0

@@ -108,12 +108,16 @@ input_audio = 1.00          # Cost per million audio input tokens (USD)
 output_audio = 10.00        # Cost per million audio output tokens (USD)
 
 [limit]
-context = 200_000           # Maximum context window (tokens)
+context = 400_000           # Maximum context window (tokens)
+context = 272_000           # Maximum input tokens
 output = 8_192              # Maximum output tokens
 
 [modalities]
 input = ["text", "image"]   # Supported input modalities
 output = ["text"]           # Supported output modalities
+
+[interleaved]
+field = "reasoning_content" # Name of the interleaved field "reasoning_content" or "reasoning_details"
 ```
 
 #### 4. Submit a Pull Request
@@ -156,18 +160,23 @@ Models must conform to the following schema, as defined in `app/schemas.ts`.
 - `release_date`: String — First public release date in `YYYY-MM` or `YYYY-MM-DD`
 - `last_updated`: String — Most recent update date in `YYYY-MM` or `YYYY-MM-DD`
 - `open_weights`: Boolean - Indicate the model's trained weights are publicly available
-- `cost.input` _(optional)_: Number — Cost per million input tokens (USD)
-- `cost.output` _(optional)_: Number — Cost per million output tokens (USD)
+- `interleaved` _(optional)_: Boolean or Object — Supports interleaved reasoning. Use `true` for general support or an object with `field` to specify the format
+- `interleaved.field`: String — Name of the interleaved field (`"reasoning_content"` or `"reasoning_details"`)
+- `cost.input`: Number — Cost per million input tokens (USD)
+- `cost.output`: Number — Cost per million output tokens (USD)
 - `cost.reasoning` _(optional)_: Number — Cost per million reasoning tokens (USD)
 - `cost.cache_read` _(optional)_: Number — Cost per million cached read tokens (USD)
 - `cost.cache_write` _(optional)_: Number — Cost per million cached write tokens (USD)
 - `cost.input_audio` _(optional)_: Number — Cost per million audio input tokens, if billed separately (USD)
 - `cost.output_audio` _(optional)_: Number — Cost per million audio output tokens, if billed separately (USD)
 - `limit.context`: Number — Maximum context window (tokens)
+- `limit.input`: Number — Maximum input tokens
 - `limit.output`: Number — Maximum output tokens
 - `modalities.input`: Array of strings — Supported input modalities (e.g., ["text", "image", "audio", "video", "pdf"])
 - `modalities.output`: Array of strings — Supported output modalities (e.g., ["text"])
-- `status` _(optional)_: Array of strings — Supported status:
+- `status` _(optional)_: String — Supported status:
+  - `alpha` - Indicate the model is in alpha testing
+  - `beta` - Indicate the model is in beta testing
   - `deprecated` - Indicate the model is no longer served by the provider's public API
 
 ### Examples

@@ -1,0 +1,19 @@
+name = "Qwen-Max-Latest"
+family = "qwen-max-latest"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = true
+open_weights = false
+knowledge = "2024-11"
+
+[cost]
+input = 0.343
+output = 1.372
+
+[limit]
+context = 131_072
+
+[modalities]
+input = ["text"]
+output = ["text"]

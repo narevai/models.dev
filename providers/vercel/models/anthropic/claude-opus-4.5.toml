@@ -12,7 +12,7 @@ open_weights = false
 [cost]
 input = 5.00
 output = 25.00
-cache_read = 1.50
+cache_read = 0.5
 cache_write = 18.75
 
 [limit]

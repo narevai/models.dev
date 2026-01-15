@@ -1,12 +1,12 @@
 name = "GLM 4.6V"
-family = "glm"
+family = "glmv"
 attachment = true
 reasoning = false
 tool_call = true
 structured_output = true
 temperature = true
 release_date = "2025-12-11"
-last_updated = "2025-12-29"
+last_updated = "2026-01-15"
 open_weights = true
 
 [cost]
@@ -20,3 +20,6 @@ output = 32_768
 [modalities]
 input = ["text", "image"]
 output = ["text"]
+
+[interleaved]
+field = "reasoning_details"

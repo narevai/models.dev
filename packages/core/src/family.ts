@@ -140,6 +140,7 @@ export const ModelFamilyValues = [
   "dall-e",
   "flux",
   "imagen",
+  "recraft",
   "stable-diffusion",
   "ideogram",
   "dreamshaper",

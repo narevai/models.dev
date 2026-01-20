@@ -23,4 +23,4 @@ input = ["text"]
 output = ["text"]
 
 [interleaved]
-field = "reasoning_details"
+field = "reasoning_content"

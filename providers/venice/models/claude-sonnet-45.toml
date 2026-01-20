@@ -23,3 +23,6 @@ output = 50_688
 [modalities]
 input = ["text", "image"]
 output = ["text"]
+
+[interleaved]
+field = "reasoning_content"

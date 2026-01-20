@@ -2,4 +2,4 @@ name = "Venice AI"
 env = ["VENICE_API_KEY"]
 npm = "venice-ai-sdk-provider"
 doc = "https://docs.venice.ai"
-api = "https://api.venice.ai/api/v1"
+# api = "https://api.venice.ai/api/v1"

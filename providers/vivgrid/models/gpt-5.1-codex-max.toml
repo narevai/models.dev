@@ -1,8 +1,8 @@
 name = "GPT-5.1 Codex Max"
-family = "gpt-5-codex-max"
+family = "gpt-codex"
 release_date = "2025-11-13"
 last_updated = "2025-11-13"
-attachment = true
+attachment = false
 reasoning = true
 temperature = false
 knowledge = "2024-09-30"

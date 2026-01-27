@@ -1,5 +1,5 @@
 name = "Kimi K2.5"
-family = "kimi-k2"
+family = "kimi"
 attachment = true
 reasoning = true
 tool_call = true

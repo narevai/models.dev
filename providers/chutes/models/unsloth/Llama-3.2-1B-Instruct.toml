@@ -1,6 +1,5 @@
-name = "MiMo V2 Flash"
-family = "mimo"
-release_date = "2025-12-29"
+name = "Llama 3.2 1B Instruct"
+release_date = "2026-01-27"
 last_updated = "2026-01-27"
 attachment = false
 reasoning = false
@@ -10,8 +9,8 @@ structured_output = false
 open_weights = true
 
 [cost]
-input = 0.09
-output = 0.29
+input = 0.01
+output = 0.01
 
 [limit]
 context = 32_768

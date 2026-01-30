@@ -9,6 +9,11 @@ tool_call = true
 structured_output = true
 open_weights = true
 
+[interleaved]
+field = "reasoning_details"
+
+
+
 [cost]
 input = 0.07
 output = 0.4
@@ -20,3 +25,6 @@ output = 65_535
 [modalities]
 input = ["text"]
 output = ["text"]
+
+[provider]
+npm = "@openrouter/ai-sdk-provider"

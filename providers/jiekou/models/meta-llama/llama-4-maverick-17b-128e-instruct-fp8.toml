@@ -1,0 +1,22 @@
+name = "Llama 4 Maverick Instruct"
+family = "llama"
+release_date = "2026-01"
+last_updated = "2026-01"
+attachment = true
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = false
+open_weights = true
+
+[cost]
+input = 0.17
+output = 0.85
+
+[limit]
+context = 1048576
+output = 1048576
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

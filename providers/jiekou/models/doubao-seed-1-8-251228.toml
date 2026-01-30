@@ -1,0 +1,22 @@
+name = "doubao-seed-1-8-251228"
+family = "seed"
+release_date = "2026-01"
+last_updated = "2026-01"
+attachment = true
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[cost]
+input = 0.1103
+output = 1.1034
+
+[limit]
+context = 256000
+output = 64000
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]

@@ -1,0 +1,22 @@
+name = "grok-3"
+family = "grok"
+release_date = "2026-01"
+last_updated = "2026-01"
+attachment = true
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = false
+
+[cost]
+input = 2.7
+output = 13.5
+
+[limit]
+context = 131072
+output = 32000
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]

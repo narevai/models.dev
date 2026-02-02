@@ -1,7 +1,7 @@
-name = "Gemini 3 Flash Preview Free"
-release_date = "2025-12-17"
-last_updated = "2025-12-17"
-attachment = true
+name = "Step 3.5 Flash (Free)"
+release_date = "2026-02-02"
+last_updated = "2026-02-02"
+attachment = false
 reasoning = true
 temperature = true
 tool_call = true
@@ -13,9 +13,9 @@ input = 0.00
 output = 0.00
 
 [limit]
-context = 1_048_576
+context = 256_000
 output = 64_000
 
 [modalities]
-input = ["text", "image", "audio"]
+input = ["text"]
 output = ["text"]

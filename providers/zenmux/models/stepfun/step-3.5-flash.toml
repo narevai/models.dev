@@ -1,6 +1,6 @@
-name = "DeepSeek-V3.2 (Thinking Mode)"
-release_date = "2025-10-23"
-last_updated = "2025-10-23"
+name = "Step 3.5 Flash"
+release_date = "2026-02-02"
+last_updated = "2026-02-02"
 attachment = false
 reasoning = true
 temperature = true
@@ -9,12 +9,11 @@ knowledge = "2025-01-01"
 open_weights = false
 
 [cost]
-input = 0.28
-output = 0.42
-cache_read = 0.03
+input = 0.10
+output = 0.30
 
 [limit]
-context = 128_000
+context = 256_000
 output = 64_000
 
 [modalities]

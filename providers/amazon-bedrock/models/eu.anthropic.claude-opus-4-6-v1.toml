@@ -12,14 +12,14 @@ open_weights = false
 [cost]
 input = 5.00
 output = 25.00
-cache_read = 1.50
-cache_write = 18.75
+cache_read = 0.50
+cache_write = 6.25
 
 [cost.context_over_200k]
 input = 10.00
 output = 37.50
-cache_read = 3.00
-cache_write = 37.50
+cache_read = 1.00
+cache_write = 12.50
 
 [limit]
 context = 1_000_000

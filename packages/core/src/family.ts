@@ -184,6 +184,10 @@ export const ModelFamilyValues = [
   // Sherlock
   "sherlock",
 
+  // Pony
+  "pony",
+
+
   // Mercury
   "mercury",
 

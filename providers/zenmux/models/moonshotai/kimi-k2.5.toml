@@ -17,6 +17,9 @@ cache_read = 0.10
 context = 262_000
 output = 64_000
 
+[interleaved]
+field = "reasoning_content"
+
 [modalities]
 input = ["text", "image", "video"]
 output = ["text"]

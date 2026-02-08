@@ -6,7 +6,7 @@ attachment = true
 reasoning = true
 temperature = true
 tool_call = true
-knowledge = "2025-05"
+knowledge = "2025-05-30"
 open_weights = false
 
 [cost]
@@ -22,7 +22,7 @@ cache_read = 1.00
 cache_write = 12.50
 
 [limit]
-context = 200_000
+context = 1_000_000
 output = 128_000
 
 [modalities]

@@ -1,5 +1,5 @@
 name = "Claude Sonnet 3.7 (Latest)"
-family = "claude-3-7-sonnet-latest"
+family = "claude-sonnet"
 release_date = "2025-03-13"
 last_updated = "2025-03-13"
 attachment = true

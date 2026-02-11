@@ -6,7 +6,6 @@ attachment = false
 reasoning = true
 temperature = true
 tool_call = true
-knowledge = "none"
 open_weights = false
 
 [interleaved]

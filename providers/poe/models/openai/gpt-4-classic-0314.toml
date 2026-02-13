@@ -1,5 +1,5 @@
 name = "GPT-4-Classic-0314"
-family = "gpt-4"
+family = "gpt"
 release_date = "2024-08-26"
 last_updated = "2024-08-26"
 attachment = true
@@ -14,7 +14,7 @@ output = 54
 
 [limit]
 context = 8_192
-output = 4096
+output = 4_096
 
 [modalities]
 input = ["text", "image"]

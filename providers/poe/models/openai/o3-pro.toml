@@ -1,5 +1,5 @@
 name = "o3-pro"
-family = "o3-pro"
+family = "o-pro"
 release_date = "2025-06-10"
 last_updated = "2025-06-10"
 attachment = true
@@ -14,7 +14,7 @@ output = 72
 
 [limit]
 context = 200_000
-output = 100000
+output = 100_000
 
 [modalities]
 input = ["text", "image"]

@@ -1,5 +1,5 @@
 name = "Kimi K2 Thinking"
-family = "kimi-k2"
+family = "kimi-thinking"
 release_date = "2025-11-06"
 last_updated = "2025-11-06"
 attachment = false
@@ -9,6 +9,7 @@ tool_call = true
 open_weights = true
 
 [cost]
+cache_read = 0.30
 input = 0.60
 output = 2.50
 

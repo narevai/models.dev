@@ -6,7 +6,6 @@ attachment = true
 reasoning = true
 temperature = true
 tool_call = true
-structured_output = true
 knowledge = "2025-01"
 open_weights = false
 

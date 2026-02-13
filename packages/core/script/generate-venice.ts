@@ -4,6 +4,7 @@ import { z } from "zod";
 import path from "node:path";
 import { readdir } from "node:fs/promises";
 import * as readline from "node:readline";
+import { ModelFamilyValues } from "../src/family.js";
 
 // Venice API endpoint
 const API_ENDPOINT = "https://api.venice.ai/api/v1/models?type=text";
@@ -47,6 +48,7 @@ const Pricing = z
     input: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough(),
     output: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough(),
     cache_input: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough().optional(),
+    cache_write: z.object({ usd: z.number(), diem: z.number().optional() }).passthrough().optional(),
   })
   .passthrough();
 
@@ -59,6 +61,7 @@ const ModelSpec = z
     name: z.string(),
     modelSource: z.string().optional(),
     offline: z.boolean().optional(),
+    privacy: z.string().optional(),
     traits: z.array(z.string()).optional(),
   })
   .passthrough();
@@ -82,31 +85,35 @@ const VeniceResponse = z
   })
   .passthrough();
 
-// Family inference patterns
-const familyPatterns: [RegExp, string][] = [
-  [/^llama-3\.3/i, "llama-3.3"],
-  [/^llama-3\.2/i, "llama-3.2"],
-  [/^qwen3/i, "qwen3"],
-  [/^deepseek/i, "deepseek"],
-  [/^mistral/i, "mistral"],
-  [/^devstral/i, "devstral"],
-  [/^gemini/i, "gemini"],
-  [/^grok/i, "grok"],
-  [/^claude/i, "claude"],
-  [/^hermes/i, "hermes"],
-  [/^google-gemma/i, "gemma"],
-  [/^kimi/i, "kimi"],
-  [/glm-4.6/i, "glm-4.6"],
-  [/^venice/i, "venice-uncensored"],
-  [/^openai-gpt/i, "openai-gpt"],
-];
+function matchesFamily(target: string, family: string): boolean {
+  const targetLower = target.toLowerCase();
+  const familyLower = family.toLowerCase();
+  let familyIdx = 0;
+
+  for (let i = 0; i < targetLower.length && familyIdx < familyLower.length; i++) {
+    if (targetLower[i] === familyLower[familyIdx]) {
+      familyIdx++;
+    }
+  }
+
+  return familyIdx === familyLower.length;
+}
 
 function inferFamily(modelId: string, modelName: string): string | undefined {
-  for (const [pattern, family] of familyPatterns) {
-    if (pattern.test(modelId) || pattern.test(modelName)) {
+  const sortedFamilies = [...ModelFamilyValues].sort((a, b) => b.length - a.length);
+
+  for (const family of sortedFamilies) {
+    if (matchesFamily(modelId, family)) {
       return family;
     }
   }
+
+  for (const family of sortedFamilies) {
+    if (matchesFamily(modelName, family)) {
+      return family;
+    }
+  }
+
   return undefined;
 }
 
@@ -205,6 +212,7 @@ interface MergedModel {
     input: number;
     output: number;
     cache_read?: number;
+    cache_write?: number;
   };
   limit: {
     context: number;
@@ -224,29 +232,28 @@ function mergeModel(
   const caps = spec.capabilities;
 
   const contextTokens = spec.availableContextTokens;
-  const outputTokens = Math.floor(contextTokens / 4);
+  const proposedOutputTokens = Math.floor(contextTokens / 4);
+  const outputTokens =
+    existing?.limit?.output !== undefined && existing.limit.output < proposedOutputTokens
+      ? existing.limit.output
+      : proposedOutputTokens
 
-  // Determine open_weights from modelSource
   const openWeights = spec.modelSource
     ? spec.modelSource.toLowerCase().includes("huggingface")
-    : false;
+    : spec.privacy === "private";
 
-  // Build input modalities from API (no auto-PDF)
   const inputModalities = buildInputModalities(caps);
 
-  // Check if existing has PDF in modalities - preserve it
   if (existing?.modalities?.input?.includes("pdf") && !inputModalities.includes("pdf")) {
     inputModalities.push("pdf");
   }
 
-  // Determine attachment based on vision/audio/video support
   const attachment =
     caps.supportsVision === true ||
     caps.supportsAudioInput === true ||
     caps.supportsVideoInput === true;
 
   const merged: MergedModel = {
-    // Always from API
     name: spec.name,
     attachment,
     reasoning: caps.supportsReasoning === true,
@@ -276,18 +283,12 @@ function mergeModel(
       input: spec.pricing.input.usd,
       output: spec.pricing.output.usd,
       ...(spec.pricing.cache_input && { cache_read: spec.pricing.cache_input.usd }),
+      ...(spec.pricing.cache_write && { cache_write: spec.pricing.cache_write.usd }),
     };
   }
 
-  // Preserve from existing OR infer
-  if (existing?.family) {
-    merged.family = existing.family;
-  } else {
-    const inferred = inferFamily(apiModel.id, spec.name);
-    if (inferred) {
-      merged.family = inferred;
-    }
-  }
+  const inferred = inferFamily(apiModel.id, spec.name);
+  merged.family = inferred ?? existing?.family;
 
   // Preserve manual fields from existing
   if (existing?.knowledge) {
@@ -347,6 +348,9 @@ function formatToml(model: MergedModel): string {
     lines.push(`output = ${model.cost.output}`);
     if (model.cost.cache_read !== undefined) {
       lines.push(`cache_read = ${model.cost.cache_read}`);
+    }
+    if (model.cost.cache_write !== undefined) {
+      lines.push(`cache_write = ${model.cost.cache_write}`);
     }
   }
 
@@ -409,6 +413,7 @@ function detectChanges(
   compare("cost.input", existing.cost?.input, merged.cost?.input);
   compare("cost.output", existing.cost?.output, merged.cost?.output);
   compare("cost.cache_read", existing.cost?.cache_read, merged.cost?.cache_read);
+  compare("cost.cache_write", existing.cost?.cache_write, merged.cost?.cache_write);
   compare("limit.context", existing.limit?.context, merged.limit.context);
   compare("limit.output", existing.limit?.output, merged.limit.output);
   compare("modalities.input", existing.modalities?.input, merged.modalities.input);

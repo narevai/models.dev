@@ -1,7 +1,6 @@
-name = "MiroThinker v1.5 235B"
-family = "miromind-ai"
-release_date = "2025-02-12"
-last_updated = "2025-02-12"
+name = "MiroThinker V1.5 235B"
+release_date = "2026-01-10"
+last_updated = "2026-01-10"
 attachment = false
 reasoning = false
 temperature = true
@@ -10,17 +9,13 @@ structured_output = false
 open_weights = true
 
 [cost]
-input = 0.3
-output = 1.2
-cache_read = 0.15
-cache_write = 0.0
-input_audio = 0.0
-output_audio = 0.0
+input = 0.30
+output = 1.20
 
 [limit]
-context = 262144
-output = 262144
+context = 32_768
+output = 8_192
 
 [modalities]
-input = ['text']
-output = ['text']
+input = ["text"]
+output = ["text"]

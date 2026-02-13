@@ -1,9 +1,9 @@
 name = "Qwen3 235B A22B Instruct 2507 TEE"
 family = "qwen"
 release_date = "2025-12-29"
-last_updated = "2025-02-12"
+last_updated = "2026-01-10"
 attachment = false
-reasoning = true
+reasoning = false
 temperature = true
 tool_call = true
 structured_output = true
@@ -12,19 +12,11 @@ open_weights = true
 [cost]
 input = 0.08
 output = 0.55
-reasoning = 0.825
-cache_read = 0.04
-cache_write = 0.0
-input_audio = 0.0
-output_audio = 0.0
 
 [limit]
-context = 262144
-output = 65536
+context = 262_144
+output = 65_536
 
 [modalities]
-input = ['text']
-output = ['text']
-
-[interleaved]
-field = "reasoning_content"
+input = ["text"]
+output = ["text"]

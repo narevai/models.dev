@@ -1,5 +1,5 @@
 name = "GPT-3.5-Turbo-Raw"
-family = "gpt-3.5-turbo"
+family = "gpt"
 release_date = "2023-09-27"
 last_updated = "2023-09-27"
 attachment = true
@@ -14,7 +14,7 @@ output = 1.4
 
 [limit]
 context = 4_524
-output = 2048
+output = 2_048
 
 [modalities]
 input = ["text", "image"]

@@ -1,5 +1,5 @@
 name = "Kimi K2 Instruct"
-family = "kimi-k2"
+family = "kimi"
 release_date = "2025-07-14"
 last_updated = "2025-07-14"
 attachment = false
@@ -15,7 +15,7 @@ output = 3
 
 [limit]
 context = 131_072
-output = 32_768
+output = 131_072
 
 [modalities]
 input = ["text"]

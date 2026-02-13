@@ -1,5 +1,5 @@
 name = "o4-mini-deep-research"
-family = "o4-mini"
+family = "o-mini"
 release_date = "2025-06-27"
 last_updated = "2025-06-27"
 attachment = true
@@ -15,7 +15,7 @@ cache_read = 0.45
 
 [limit]
 context = 200_000
-output = 100000
+output = 100_000
 
 [modalities]
 input = ["text"]

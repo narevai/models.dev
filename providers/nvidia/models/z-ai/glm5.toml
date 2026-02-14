@@ -17,8 +17,8 @@ input = 0.0
 output = 0.0
 
 [limit]
-context = 202_752
-output = 131_000
+context = 202752
+output = 131000
 
 [modalities]
 input = ["text"]

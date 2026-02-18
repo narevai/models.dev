@@ -10,11 +10,11 @@ knowledge = "2025-04"
 open_weights = true
 
 [cost]
-input = 0.60
-output = 2.20
+input = 0.45
+output = 1.90
 
 [limit]
-context = 204_800
+context = 202_752
 output = 131_072
 
 [modalities]

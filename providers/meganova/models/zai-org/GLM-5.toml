@@ -12,11 +12,11 @@ open_weights = false
 field = "reasoning_content"
 
 [cost]
-input = 1.00
-output = 3.20
+input = 0.80
+output = 2.56
 
 [limit]
-context = 204_800
+context = 202_752
 output = 131_072
 
 [modalities]

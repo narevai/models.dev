@@ -10,7 +10,7 @@ knowledge = "2026-01"
 open_weights = true
 
 [cost]
-input = 0.50
+input = 0.45
 output = 2.80
 
 [limit]

@@ -50,6 +50,7 @@ const ModelSpec = z
   .object({
     pricing: Pricing.optional(),
     availableContextTokens: z.number(),
+    maxCompletionTokens: z.number().optional(),
     capabilities: Capabilities,
     constraints: z.any().optional(),
     name: z.string(),
@@ -238,11 +239,7 @@ function mergeModel(
   const caps = spec.capabilities;
 
   const contextTokens = spec.availableContextTokens;
-  const proposedOutputTokens = Math.floor(contextTokens / 4);
-  const outputTokens =
-    existing?.limit?.output !== undefined && existing.limit.output < proposedOutputTokens
-      ? existing.limit.output
-      : proposedOutputTokens
+  const outputTokens = spec.maxCompletionTokens ?? Math.floor(contextTokens / 4);
 
   const openWeights = spec.modelSource
     ? spec.modelSource.toLowerCase().includes("huggingface")

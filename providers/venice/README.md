@@ -22,7 +22,7 @@ Details
 - Output path: `providers/venice/models/<model-id>.toml`
 - Merge behavior: Updates API-sourced fields, preserves manual fields
 - Dates: `release_date`/`last_updated` use `YYYY-MM-DD`; `knowledge` uses `YYYY-MM`
-- Output limit: Calculated as `context / 4`
+- Output limit: Sourced from `maxCompletionTokens` in the API response (falls back to `context / 4` if absent)
 
 Preserved Fields (manual input)
 - `family`: Inferred from model ID if not already set

@@ -1,9 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@models.dev/web",
+  "type": "module",
   "scripts": {
     "dev": "bun run --hot ./src/server.ts",
-    "build": "./script/build.ts"
+    "build": "bun ./script/build.ts"
   },
   "dependencies": {
     "hono": "^4.8.0",

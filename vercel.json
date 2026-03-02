@@ -1,0 +1,35 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "bunVersion": "1.x",
+    "buildCommand": "bun run --filter '@models.dev/web' build",
+    "outputDirectory": "packages/web/dist",
+    "installCommand": "bun install",
+    "framework": null,
+    "cleanUrls": true,
+    "rewrites": [
+        {
+            "source": "/api.json",
+            "destination": "/_api.json"
+        },
+        {
+            "source": "/index",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/model-schema.json",
+            "destination": "/api/model-schema"
+        },
+        {
+            "source": "/logos/:path*",
+            "destination": "/logos/:path*",
+            "fallback": "/logos/default.svg"
+        }
+    ],
+    "redirects": [
+        {
+            "source": "/((?!api/|logos/|_api.json|_index.html|index.html|model-schema.json).*)",
+            "destination": "/",
+            "permanent": false
+        }
+    ]
+}

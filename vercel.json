@@ -1,6 +1,20 @@
 {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "bunVersion": "1.x",
     "buildCommand": "bun run --filter '@models.dev/web' build",
     "outputDirectory": "packages/web/dist",
     "installCommand": "bun install",
-    "framework": null
+    "framework": null,
+    "cleanUrls": true,
+    "rewrites": [
+        {
+            "source": "/logos/:provider.svg",
+            "destination": "/logos/:provider.svg",
+            "fallback": "/logos/default.svg"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
 }

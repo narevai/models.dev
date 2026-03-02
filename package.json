@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "bun run --filter '@models.dev/web' dev",
+    "build": "bun run --filter '@models.dev/web' build",
     "validate": "bun ./packages/core/script/validate.ts",
     "helicone:generate": "bun ./packages/core/script/generate-helicone.ts",
     "venice:generate": "bun ./packages/core/script/generate-venice.ts",

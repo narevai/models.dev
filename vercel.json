@@ -1,0 +1,6 @@
+{
+    "buildCommand": "bun run --filter '@models.dev/web' build",
+    "outputDirectory": "packages/web/dist",
+    "installCommand": "bun install",
+    "framework": null
+}

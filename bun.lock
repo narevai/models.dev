@@ -17,12 +17,6 @@
         "@types/node": "catalog:",
       },
     },
-    "packages/function": {
-      "name": "@models.dev/function",
-      "devDependencies": {
-        "@tsconfig/bun": "catalog:",
-      },
-    },
     "packages/web": {
       "name": "@models.dev/web",
       "dependencies": {
@@ -43,8 +37,6 @@
     "zod": "3.24.2",
   },
   "packages": {
-    "@models.dev/function": ["@models.dev/function@workspace:packages/function"],
-
     "@models.dev/web": ["@models.dev/web@workspace:packages/web"],
 
     "@tsconfig/bun": ["@tsconfig/bun@1.0.8", "", {}, "sha512-JlJaRaS4hBTypxtFe8WhnwV8blf0R+3yehLk8XuyxUYNx6VXsKCjACSCvOYEFUiqlhlBWxtYCn/zRlOb8BzBQg=="],

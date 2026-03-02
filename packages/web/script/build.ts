@@ -9,7 +9,11 @@ await fs.rm("./dist", { recursive: true, force: true });
 await Bun.build({
   entrypoints: ["./index.html"],
   outdir: "dist",
-  target: "bun",
+  target: "browser",
+  external: [
+    "/src/index.css",
+    "/logos/*",
+  ],
 });
 
 for await (const file of new Bun.Glob("./public/*").scan()) {
@@ -43,8 +47,7 @@ for (const entry of entries) {
 
 let html = await Bun.file("./dist/index.html").text();
 html = html.replace("<!--static-->", Rendered);
-await Bun.write("./dist/index.html", html);
-await Bun.write("./dist/api.json", JSON.stringify(Providers));
+await Bun.write("./dist/_index.html", html);
+await Bun.write("./dist/_api.json", JSON.stringify(Providers));
 
-await $`mv ./dist/index.html ./dist/_index.html`;
-await $`mv ./dist/api.json ./dist/_api.json`;
+await fs.unlink("./dist/index.html");

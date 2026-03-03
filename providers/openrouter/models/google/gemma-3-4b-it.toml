@@ -1,21 +1,23 @@
 name = "Gemma 3 4B"
 family = "gemma"
+
 release_date = "2025-03-13"
-last_updated = "2025-03-13"
+last_updated = "2026-03-03"
 attachment = true
 reasoning = false
 temperature = true
-knowledge = "2024-10"
 tool_call = false
+structured_output = true
 open_weights = true
+knowledge = "2024-10"
 
 [cost]
-input = 0.01703
-output = 0.06815
+input = 0.04
+output = 0.08
 
 [limit]
-context = 96_000
-output = 96_000
+context = 131_072
+output = 131_072
 
 [modalities]
 input = ["text", "image"]

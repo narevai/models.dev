@@ -1,16 +1,19 @@
 name = "GPT OSS Safeguard 20B"
 family = "gpt-oss"
+
 release_date = "2025-10-29"
-last_updated = "2025-10-29"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = true
 temperature = true
 tool_call = true
+structured_output = true
 open_weights = false
 
 [cost]
 input = 0.075
-output = 0.30
+output = 0.3
+cache_read = 0.037
 
 [limit]
 context = 131_072

@@ -1,0 +1,22 @@
+name = "Nex AGI: DeepSeek V3.1 Nex N1"
+
+release_date = "2025-12-08"
+last_updated = "2026-03-03"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = true
+structured_output = true
+open_weights = true
+
+[cost]
+input = 0.27
+output = 1
+
+[limit]
+context = 131_072
+output = 163_840
+
+[modalities]
+input = ["text"]
+output = ["text"]

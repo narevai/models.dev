@@ -1,0 +1,24 @@
+name = "Google: Nano Banana (Gemini 2.5 Flash Image)"
+
+release_date = "2025-10-07"
+last_updated = "2026-03-03"
+attachment = true
+reasoning = false
+temperature = true
+tool_call = false
+structured_output = true
+open_weights = false
+
+[cost]
+input = 0.3
+output = 2.5
+cache_read = 0.03
+cache_write = 0.083333
+
+[limit]
+context = 32_768
+output = 32_768
+
+[modalities]
+input = ["image", "text"]
+output = ["image", "text"]

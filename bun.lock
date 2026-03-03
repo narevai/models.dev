@@ -20,6 +20,13 @@
         "@types/node": "catalog:",
       },
     },
+    "packages/monitor": {
+      "name": "@models.dev/monitor",
+      "version": "0.0.0",
+      "dependencies": {
+        "@aws-sdk/client-s3": "*",
+      },
+    },
     "packages/web": {
       "name": "@models.dev/web",
       "dependencies": {
@@ -119,6 +126,8 @@
     "@aws-sdk/xml-builder": ["@aws-sdk/xml-builder@3.972.8", "", { "dependencies": { "@smithy/types": "^4.13.0", "fast-xml-parser": "5.3.6", "tslib": "^2.6.2" } }, "sha512-Ql8elcUdYCha83Ol7NznBsgN5GVZnv3vUd86fEc6waU6oUdY0T1O9NODkEEOS/Uaogr87avDrUC6DSeM4oXjZg=="],
 
     "@aws/lambda-invoke-store": ["@aws/lambda-invoke-store@0.2.3", "", {}, "sha512-oLvsaPMTBejkkmHhjf09xTgk71mOqyr/409NKhRIL08If7AhVfUsJhVsx386uJaqNd42v9kWamQ9lFbkoC2dYw=="],
+
+    "@models.dev/monitor": ["@models.dev/monitor@workspace:packages/monitor"],
 
     "@models.dev/web": ["@models.dev/web@workspace:packages/web"],
 

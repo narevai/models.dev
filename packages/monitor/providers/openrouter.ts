@@ -4,7 +4,7 @@
  * Usage: bun run monitor:openrouter
  */
 
-import { runMonitor, round6 } from './lib.ts'
+import { runMonitor, round6 } from '@models.dev/monitor'
 
 runMonitor({
   name: 'OpenRouter',

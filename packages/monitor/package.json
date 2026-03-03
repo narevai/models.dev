@@ -1,0 +1,11 @@
+{
+  "name": "@models.dev/monitor",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "exports": { ".": "./index.ts" },
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-s3": "*"
+  }
+}

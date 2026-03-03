@@ -11,8 +11,8 @@
     "helicone:generate": "bun ./packages/core/script/generate-helicone.ts",
     "venice:generate": "bun ./packages/core/script/generate-venice.ts",
     "vercel:generate": "bun ./packages/core/script/generate-vercel.ts",
-    "monitor:openrouter": "bun ./models-monitor/openrouter.ts",
-    "monitor:chutes": "bun ./models-monitor/chutes.ts"
+    "monitor:openrouter": "bun ./packages/monitor/providers/openrouter.ts",
+    "monitor:chutes": "bun ./packages/monitor/providers/chutes.ts"
   },
   "type": "module",
   "workspaces": {

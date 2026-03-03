@@ -1,0 +1,21 @@
+name = "Body Builder (beta)"
+
+release_date = "2025-12-05"
+last_updated = "2025-12-05"
+attachment = false
+reasoning = false
+temperature = true
+tool_call = false
+open_weights = false
+
+[cost]
+input = -1000000
+output = -1000000
+
+[limit]
+context = 128_000
+output = 128_000
+
+[modalities]
+input = ["text"]
+output = ["text"]

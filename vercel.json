@@ -5,7 +5,7 @@
     "outputDirectory": "packages/web/dist",
     "installCommand": "bun install",
     "framework": null,
-    "cleanUrls": true,
+    "cleanUrls": false,
     "rewrites": [
         {
             "source": "/api.json",

@@ -1,22 +1,23 @@
 name = "Qwen3 235B A22B Thinking 2507"
 family = "qwen"
+
 release_date = "2025-07-25"
-last_updated = "2025-07-25"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = true
 temperature = true
-knowledge = "2025-04"
 tool_call = true
 structured_output = true
 open_weights = true
+knowledge = "2025-04"
 
 [cost]
-input = 0.078
-output = 0.312
+input = 0
+output = 0
 
 [limit]
-context = 262_144
-output = 81_920
+context = 131_072
+output = 131_072
 
 [modalities]
 input = ["text"]

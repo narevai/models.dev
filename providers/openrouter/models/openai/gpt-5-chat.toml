@@ -1,23 +1,25 @@
 name = "GPT-5 Chat (latest)"
 family = "gpt-codex"
+
 release_date = "2025-08-07"
-last_updated = "2025-08-07"
+last_updated = "2026-03-03"
 attachment = true
-reasoning = true
+reasoning = false
 temperature = true
-knowledge = "2024-09-30"
 tool_call = false
 structured_output = true
 open_weights = false
+knowledge = "2024-09-30"
 
 [cost]
 input = 1.25
-output = 10.00
+output = 10
+cache_read = 0.125
 
 [limit]
-context = 400_000
-output = 128_000
+context = 128_000
+output = 16_384
 
 [modalities]
-input = ["text", "image"]
+input = ["pdf", "image", "text"]
 output = ["text"]

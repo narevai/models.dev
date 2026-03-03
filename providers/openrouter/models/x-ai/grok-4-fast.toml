@@ -1,20 +1,20 @@
 name = "Grok 4 Fast"
 family = "grok"
+
 release_date = "2025-08-19"
-last_updated = "2025-08-19"
-attachment = false
+last_updated = "2026-03-03"
+attachment = true
 reasoning = true
 temperature = true
-knowledge = "2024-11"
 tool_call = true
 structured_output = true
 open_weights = false
+knowledge = "2024-11"
 
 [cost]
-input = 0.20
-output = 0.50
+input = 0.2
+output = 0.5
 cache_read = 0.05
-cache_write = 0.05
 
 [limit]
 context = 2_000_000

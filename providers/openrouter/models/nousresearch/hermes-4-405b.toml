@@ -1,18 +1,20 @@
 id = "nousresearch/hermes-4-405b"
 name = "Hermes 4 405B"
 family = "hermes"
+
 release_date = "2025-08-25"
-last_updated = "2025-08-25"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = true
 temperature = true
-knowledge = "2023-12"
-tool_call = true
+tool_call = false
+structured_output = true
 open_weights = true
+knowledge = "2023-12"
 
 [cost]
-input = 1.00
-output = 3.00
+input = 1
+output = 3
 
 [limit]
 context = 131_072

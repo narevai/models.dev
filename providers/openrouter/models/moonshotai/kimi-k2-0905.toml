@@ -1,22 +1,24 @@
 name = "Kimi K2 Instruct 0905"
 family = "kimi"
+
 release_date = "2025-09-05"
-last_updated = "2025-09-05"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = false
 temperature = true
 tool_call = true
 structured_output = true
-knowledge = "2024-10"
 open_weights = true
+knowledge = "2024-10"
 
 [cost]
-input = 0.6
-output = 2.5
+input = 0.4
+output = 2
+cache_read = 0.15
 
 [limit]
-context = 262_144
-output = 16_384
+context = 131_072
+output = 131_072
 
 [modalities]
 input = ["text"]

@@ -1,21 +1,23 @@
 name = "Kimi K2"
 family = "kimi"
+
 release_date = "2025-07-11"
-last_updated = "2025-07-11"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = false
 temperature = true
 tool_call = true
-knowledge = "2024-10"
+structured_output = true
 open_weights = true
+knowledge = "2024-10"
 
 [cost]
 input = 0.55
-output = 2.20
+output = 2.2
 
 [limit]
-context = 131_072
-output = 32_768
+context = 131_000
+output = 131_000
 
 [modalities]
 input = ["text"]

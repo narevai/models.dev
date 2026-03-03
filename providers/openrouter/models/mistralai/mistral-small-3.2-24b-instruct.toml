@@ -1,18 +1,26 @@
 id = "mistralai/mistral-small-3.2-24b-instruct:free"
 name = "Mistral Small 3.2 24B Instruct"
 family = "mistral-small"
+
 release_date = "2025-06-20"
-last_updated = "2025-06-20"
+last_updated = "2026-03-03"
 attachment = true
 reasoning = false
 temperature = true
-knowledge = "2024-10"
 tool_call = true
 structured_output = true
 open_weights = true
-cost = { input = 0, output = 0 }
-limit = { context = 96000, output = 8192 }
+knowledge = "2024-10"
+
+[cost]
+input = 0.06
+output = 0.18
+cache_read = 0.03
+
+[limit]
+context = 131_072
+output = 131_072
 
 [modalities]
-input = ["text", "image"]
+input = ["image", "text"]
 output = ["text"]

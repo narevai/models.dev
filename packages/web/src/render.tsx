@@ -183,7 +183,7 @@ export const Rendered = renderToString(
   <Fragment>
     <header>
       <div class="left">
-        <h1>Models.dev</h1>
+        <h1>models.narev.ai</h1>
         <span class="slash"></span>
         <p>An open-source database of AI models</p>
       </div>
@@ -192,7 +192,7 @@ export const Rendered = renderToString(
           class="github"
           target="_blank"
           rel="noopener noreferrer"
-          href="https://github.com/sst/models.dev"
+          href="https://github.com/narevai/models.dev"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -441,8 +441,8 @@ export const Rendered = renderToString(
                     {model.structured_output === undefined
                       ? "-"
                       : model.structured_output
-                      ? "Yes"
-                      : "No"}
+                        ? "Yes"
+                        : "No"}
                   </td>
                   <td>{model.temperature ? "Yes" : "No"}</td>
                   <td>{model.open_weights ? "Open" : "Closed"}</td>
@@ -461,64 +461,41 @@ export const Rendered = renderToString(
         <h2>How to use</h2>
         <button id="close">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <line
-              x1="18"
-              y1="6"
-              x2="6"
-              y2="18"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-            <line
-              x1="6"
-              y1="6"
-              x2="18"
-              y2="18"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
       </div>
       <div class="body">
         <p>
-          <a href="/">Models.dev</a> is a comprehensive open-source database of
+          <a href="/">Models Database</a> is a comprehensive open-source database of
           AI model specifications, pricing, and features.
         </p>
         <p>
           There&apos;s no single database with information about all the
-          available AI models. We started Models.dev as a community-contributed
-          project to address this. We also use it internally in{" "}
-          <a
-            href="https://opencode.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            opencode
-          </a>
-          .
+          available AI models. This project serves as a community-contributed
+          resource to address this. It is a fork of the original models.dev project.
         </p>
+
         <h2>API</h2>
         <p>You can access this data through an API.</p>
         <div class="code-block">
           <code>
-            curl <a href="/api.json">https://models.dev/api.json</a>
+            curl <a href="/api.json">https://models.narev.ai/api.json</a>
           </code>
         </div>
         <p>
           Use the <b>Model ID</b> field to do a lookup on any model; it&apos;s
           the identifier used by{" "}
           <a
-            href="https://ai-sdk.dev/"
+            href="https://sdk.vercel.ai/"
             target="_blank"
             rel="noopener noreferrer"
           >
             AI SDK
-          </a>
-          .
+          </a>.
         </p>
+
         <h2>Logos</h2>
         <p>
           Provider logos are available at <code>/logos/{`{provider}`}.svg</code>{" "}
@@ -528,46 +505,40 @@ export const Rendered = renderToString(
           <code>
             curl{" "}
             <a href="/logos/anthropic.svg">
-              https://models.dev/logos/anthropic.svg
+              https://models.narev.ai/logos/anthropic.svg
             </a>
           </code>
         </div>
         <p>
-          If we don't have a provider's logo, a default logo is served instead.
+          If a provider's logo is missing, a default logo is served instead.
         </p>
+
         <h2>Contribute</h2>
         <p>
           The data is stored in the{" "}
           <a
-            href="https://github.com/sst/models.dev"
+            href="https://github.com/narevai/models.dev"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub repo
           </a>{" "}
-          as TOML files; organized by provider and model. The logo is stored as
-          an SVG. This is used to generate this page and power the API.
+          as TOML files, organized by provider and model. This data is used to generate this page and power the API.
         </p>
         <p>
           We need your help keeping this up to date. Feel free to edit the data
-          and submit a pull request. Refer to the{" "}
-          <a href="https://github.com/sst/models.dev/blob/dev/README.md">
-            README
-          </a>{" "}
-          for more information.
+          and submit a pull request.
         </p>
       </div>
-      <div class="footer">
-        <a
-          href="https://github.com/sst/models.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+      <div class="footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-top: 1px solid var(--color-border);">
+        <a href="https://github.com/narevai/models.dev" style="font-size: 11px; text-decoration: none; color: var(--color-text-tertiary); font-weight: 500;">
           Edit on GitHub
         </a>
-        <a href="https://sst.dev" target="_blank" rel="noopener noreferrer">
-          Created by SST
-        </a>
+        <div style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; opacity: 0.5; color: var(--color-text-tertiary);">
+          <a href="https://sst.dev" style="text-decoration: none; color: inherit;">SST</a>
+          <span style="margin: 0 4px;">/</span>
+          <a href="https://narev.ai" style="text-decoration: none; color: inherit;">Narev</a>
+        </div>
       </div>
     </dialog>
   </Fragment>

@@ -5,15 +5,11 @@
     "outputDirectory": "packages/web/dist",
     "installCommand": "bun install",
     "framework": null,
-    "cleanUrls": true,
+    "cleanUrls": false,
     "rewrites": [
         {
             "source": "/api.json",
             "destination": "/_api.json"
-        },
-        {
-            "source": "/index",
-            "destination": "/index.html"
         },
         {
             "source": "/model-schema.json",
@@ -21,15 +17,15 @@
         },
         {
             "source": "/logos/:path*",
-            "destination": "/logos/:path*",
-            "fallback": "/logos/default.svg"
-        }
-    ],
-    "redirects": [
+            "destination": "/logos/:path*"
+        },
         {
-            "source": "/((?!api/|logos/|_api.json|_index.html|index.html|model-schema.json).*)",
-            "destination": "/",
-            "permanent": false
+            "source": "/logos/:path*",
+            "destination": "/logos/default.svg"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/_index.html"
         }
     ]
 }

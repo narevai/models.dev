@@ -34,7 +34,7 @@
             "destination": "/logos/default.svg"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/|logos/|model-schema\\.json|api\\.json).*)",
             "destination": "/_index.html"
         }
     ]

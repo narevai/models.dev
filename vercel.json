@@ -37,6 +37,10 @@
         {
             "source": "/logos/:path*",
             "destination": "/logos/default.svg"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/_index.html"
         }
     ]
 }

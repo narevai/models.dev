@@ -5,7 +5,7 @@
  * Usage: bun run monitor:chutes
  */
 
-import { runMonitor, round6 } from '@models.dev/monitor'
+import { runMonitor, round6 } from '../index.ts'
 
 runMonitor({
   name: 'Chutes',

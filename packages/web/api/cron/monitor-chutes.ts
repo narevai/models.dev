@@ -1,4 +1,4 @@
-import { runMonitor, round6 } from '../../../monitor/index'
+import { runMonitor, round6 } from '@models.dev/monitor'
 
 export const config = {
   maxDuration: 60,

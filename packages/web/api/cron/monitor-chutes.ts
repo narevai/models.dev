@@ -1,4 +1,4 @@
-import { runMonitor, round6 } from '../../packages/monitor/index.ts'
+import { runMonitor, round6 } from '../../../monitor/index.ts'
 
 export const config = { maxDuration: 60 }
 

@@ -1,5 +1,6 @@
 import Index from "../index.html";
 import { Rendered } from "./render";
+import { Providers } from "./render";
 import path from "path";
 
 Bun.serve({
@@ -65,6 +66,15 @@ const server = Bun.serve({
     const url = new URL(req.url);
     url.host = "localhost:16000";
     const result = fetch(url.toString(), req);
+
+    if (url.pathname === "/api.json") {
+      return new Response(JSON.stringify(Providers), {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*", // Helpful for local testing
+        },
+      });
+    }
 
     if (url.pathname !== "/") return result;
 

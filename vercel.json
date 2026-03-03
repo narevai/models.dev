@@ -6,6 +6,11 @@
     "installCommand": "bun install",
     "framework": null,
     "cleanUrls": false,
+    "functions": {
+        "api/cron/*.ts": {
+            "includeFiles": "packages/monitor/**"
+        }
+    },
     "crons": [
         {
             "path": "/api/cron/monitor-openrouter",

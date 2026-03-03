@@ -1,28 +1,22 @@
-name = "Claude Sonnet 4.6"
+name = "Claude Sonnet 4.5"
 family = "claude-sonnet"
 attachment = true
 reasoning = true
 tool_call = true
 structured_output = true
 temperature = true
-release_date = "2026-02-17"
+release_date = "2025-01-15"
 last_updated = "2026-03-03"
 open_weights = false
 
 [cost]
-input = 3.6
-output = 18
-cache_read = 0.36
-cache_write = 4.5
-
-[cost.context_over_200k]
-input = 7.2
-output = 27
-cache_read = 0.72
-cache_write = 9
+input = 3.75
+output = 18.75
+cache_read = 0.375
+cache_write = 4.69
 
 [limit]
-context = 1_000_000
+context = 198_000
 output = 64_000
 
 [modalities]

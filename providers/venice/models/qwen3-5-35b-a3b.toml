@@ -1,22 +1,23 @@
-name = "Qwen3 VL 235B"
+name = "Qwen 3.5 35B A3B"
 family = "qwen"
 attachment = true
-reasoning = false
+reasoning = true
 tool_call = true
 structured_output = true
 temperature = true
-release_date = "2026-01-16"
+release_date = "2026-02-25"
 last_updated = "2026-03-03"
 open_weights = true
 
 [cost]
-input = 0.25
-output = 1.5
+input = 0.3125
+output = 1.25
+cache_read = 0.15625
 
 [limit]
 context = 256_000
-output = 12_288
+output = 65_536
 
 [modalities]
-input = ["text", "image"]
+input = ["text", "image", "video"]
 output = ["text"]

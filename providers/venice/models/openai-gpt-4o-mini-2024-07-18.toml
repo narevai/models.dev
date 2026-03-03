@@ -1,21 +1,22 @@
-name = "Qwen3 VL 235B"
-family = "qwen"
+name = "GPT-4o Mini"
+family = "gpt-mini"
 attachment = true
 reasoning = false
 tool_call = true
 structured_output = true
 temperature = true
-release_date = "2026-01-16"
+release_date = "2026-02-28"
 last_updated = "2026-03-03"
-open_weights = true
+open_weights = false
 
 [cost]
-input = 0.25
-output = 1.5
+input = 0.1875
+output = 0.75
+cache_read = 0.09375
 
 [limit]
-context = 256_000
-output = 12_288
+context = 128_000
+output = 16_384
 
 [modalities]
 input = ["text", "image"]

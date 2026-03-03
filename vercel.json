@@ -6,6 +6,16 @@
     "installCommand": "bun install",
     "framework": null,
     "cleanUrls": false,
+    "crons": [
+        {
+            "path": "/api/cron/monitor-openrouter",
+            "schedule": "50 * * * *"
+        },
+        {
+            "path": "/api/cron/monitor-chutes",
+            "schedule": "50 * * * *"
+        }
+    ],
     "rewrites": [
         {
             "source": "/api.json",

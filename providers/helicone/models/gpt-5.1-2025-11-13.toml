@@ -1,18 +1,17 @@
-name = "OpenAI GPT-5 Nano"
-family = "gpt-nano"
-release_date = "2025-01-01"
+name = "OpenAI GPT-5.1"
+release_date = "2025-11-13"
 last_updated = "2026-03-03"
 attachment = false
 reasoning = false
 temperature = false
 tool_call = true
-knowledge = "2025-01"
+knowledge = "2025-11"
 open_weights = false
 
 [cost]
-input = 0.05
-output = 0.4
-cache_read = 0.005
+input = 1.25
+output = 10
+cache_read = 0.125
 
 [limit]
 context = 400000
@@ -20,4 +19,4 @@ output = 128000
 
 [modalities]
 input = ["text", "image"]
-output = ["text"]
+output = ["text", "image"]

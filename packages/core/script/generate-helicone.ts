@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import path from "node:path";
-import { mkdir, rm, readdir, stat } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 
 // Helicone public model registry endpoint
 const DEFAULT_ENDPOINT =
@@ -70,6 +70,10 @@ function boolFromParams(params: string[] | undefined, keys: string[]): boolean {
   return keys.some((k) => set.has(k.toLowerCase()));
 }
 
+function cleanPrice(p: number): string {
+  return parseFloat(p.toPrecision(10)).toString();
+}
+
 function sanitizeModalities(values: string[] | undefined): string[] {
   if (!values) return ["text"]; // default to text
   const allowed = new Set(["text", "audio", "image", "video", "pdf"]);
@@ -77,7 +81,30 @@ function sanitizeModalities(values: string[] | undefined): string[] {
   return out.length > 0 ? out : ["text"];
 }
 
-function formatToml(model: z.infer<typeof ModelItem>) {
+// ── Manually curated fields preserved from existing TOML ─────────────────────
+
+interface ExistingModel {
+  family?: string;
+  status?: string;
+  open_weights?: boolean;
+  release_date?: string;
+  knowledge?: string;
+}
+
+async function loadExistingModel(filePath: string): Promise<ExistingModel | null> {
+  try {
+    const file = Bun.file(filePath);
+    if (!(await file.exists())) return null;
+    const toml = await import(filePath, { with: { type: "toml" } }).then(
+      (m) => m.default,
+    );
+    return toml as ExistingModel;
+  } catch {
+    return null;
+  }
+}
+
+function formatToml(model: z.infer<typeof ModelItem>, existing: ExistingModel | null) {
   const ep = pickEndpoint(model);
   const pricing = ep?.pricing;
 
@@ -85,11 +112,9 @@ function formatToml(model: z.infer<typeof ModelItem>) {
 
   const nowISO = new Date().toISOString().slice(0, 10);
   const rdRaw = model.trainingDate ? String(model.trainingDate) : nowISO;
-  const releaseDate = rdRaw.slice(0, 10);
-  const lastUpdated = releaseDate;
-  const knowledge = model.trainingDate
-    ? String(model.trainingDate).slice(0, 7)
-    : undefined;
+  const releaseDate = existing?.release_date ?? rdRaw.slice(0, 10);
+  const knowledge = existing?.knowledge ??
+    (model.trainingDate ? String(model.trainingDate).slice(0, 7) : undefined);
 
   const attachment = false; // Not exposed by Helicone registry
   const temperature = boolFromParams(supported, ["temperature"]);
@@ -104,14 +129,16 @@ function formatToml(model: z.infer<typeof ModelItem>) {
 
   const lines: string[] = [];
   lines.push(`name = "${model.name.replaceAll('"', '\\"')}"`);
+  if (existing?.family) lines.push(`family = "${existing.family}"`);
   lines.push(`release_date = "${releaseDate}"`);
-  lines.push(`last_updated = "${lastUpdated}"`);
+  lines.push(`last_updated = "${nowISO}"`);
   lines.push(`attachment = ${attachment}`);
   lines.push(`reasoning = ${reasoning}`);
   lines.push(`temperature = ${temperature}`);
   lines.push(`tool_call = ${toolCall}`);
   if (knowledge) lines.push(`knowledge = "${knowledge}"`);
-  lines.push(`open_weights = false`);
+  lines.push(`open_weights = ${existing?.open_weights ?? false}`);
+  if (existing?.status) lines.push(`status = "${existing.status}"`);
   lines.push("");
 
   if (
@@ -123,15 +150,15 @@ function formatToml(model: z.infer<typeof ModelItem>) {
       (reasoning && pricing.reasoning)) !== undefined
   ) {
     lines.push(`[cost]`);
-    if (pricing.prompt !== undefined) lines.push(`input = ${pricing.prompt}`);
+    if (pricing.prompt !== undefined) lines.push(`input = ${cleanPrice(pricing.prompt)}`);
     if (pricing.completion !== undefined)
-      lines.push(`output = ${pricing.completion}`);
+      lines.push(`output = ${cleanPrice(pricing.completion)}`);
     if (reasoning && pricing.reasoning !== undefined)
-      lines.push(`reasoning = ${pricing.reasoning}`);
+      lines.push(`reasoning = ${cleanPrice(pricing.reasoning)}`);
     if (pricing.cacheRead !== undefined)
-      lines.push(`cache_read = ${pricing.cacheRead}`);
+      lines.push(`cache_read = ${cleanPrice(pricing.cacheRead)}`);
     if (pricing.cacheWrite !== undefined)
-      lines.push(`cache_write = ${pricing.cacheWrite}`);
+      lines.push(`cache_write = ${cleanPrice(pricing.cacheWrite)}`);
     lines.push("");
   }
 
@@ -179,29 +206,48 @@ async function main() {
 
   const models = parsed.data.data.models;
 
-  // Clean output directory: remove subfolders and existing TOML files
   await mkdir(outDir, { recursive: true });
-  for (const entry of await readdir(outDir)) {
-    const p = path.join(outDir, entry);
-    const st = await stat(p);
-    if (st.isDirectory()) {
-      await rm(p, { recursive: true, force: true });
-    } else if (st.isFile() && entry.endsWith(".toml")) {
-      await rm(p, { force: true });
-    }
-  }
   let created = 0;
+  let updated = 0;
+  let unchanged = 0;
+
+  const apiFilenames = new Set<string>();
 
   for (const m of models) {
     const fileSafeId = m.id.replaceAll("/", "-");
     const filePath = path.join(outDir, `${fileSafeId}.toml`);
-    const toml = formatToml(m);
-    await Bun.write(filePath, toml);
-    created++;
+    apiFilenames.add(`${fileSafeId}.toml`);
+    const existing = await loadExistingModel(filePath);
+    const newToml = formatToml(m, existing);
+
+    if (existing === null) {
+      await Bun.write(filePath, newToml);
+      created++;
+      continue;
+    }
+
+    // Compare ignoring last_updated line — only write if something meaningful changed
+    const strip = (s: string) => s.replace(/^last_updated = ".+"\n/m, "");
+    const existingRaw = await Bun.file(filePath).text();
+
+    if (strip(newToml) === strip(existingRaw)) {
+      unchanged++;
+    } else {
+      await Bun.write(filePath, newToml);
+      updated++;
+    }
+  }
+
+  let orphaned = 0;
+  for await (const file of new Bun.Glob("*.toml").scan({ cwd: outDir, absolute: false })) {
+    if (!apiFilenames.has(file)) {
+      console.log(`Note: ${file} not in Helicone API (kept)`);
+      orphaned++;
+    }
   }
 
   console.log(
-    `Generated ${created} model file(s) under providers/helicone/models/*.toml`,
+    `providers/helicone/models: ${created} created, ${updated} updated, ${unchanged} unchanged, ${orphaned} not in API (kept)`,
   );
 }
 

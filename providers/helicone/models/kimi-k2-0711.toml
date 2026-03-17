@@ -1,7 +1,7 @@
 name = "Kimi K2 (07/11)"
 family = "kimi"
 release_date = "2025-01-01"
-last_updated = "2025-01-01"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = false
 temperature = true
@@ -10,7 +10,7 @@ knowledge = "2025-01"
 open_weights = false
 
 [cost]
-input = 0.5700000000000001
+input = 0.57
 output = 2.3
 
 [limit]

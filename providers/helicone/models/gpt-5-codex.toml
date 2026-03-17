@@ -1,7 +1,7 @@
 name = "OpenAI: GPT-5 Codex"
 family = "gpt-codex"
 release_date = "2025-01-01"
-last_updated = "2025-01-01"
+last_updated = "2026-03-03"
 attachment = false
 reasoning = false
 temperature = false
@@ -12,7 +12,7 @@ open_weights = false
 [cost]
 input = 1.25
 output = 10
-cache_read = 0.12500000000000003
+cache_read = 0.125
 
 [limit]
 context = 400000

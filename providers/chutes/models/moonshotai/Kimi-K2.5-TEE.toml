@@ -14,9 +14,8 @@ structured_output = true
 field = "reasoning_content"
 
 [cost]
-input = 0.60
-output = 3.00
-
+input = 0.44
+output = 2.0
 [limit]
 context = 262_144
 output = 65_535

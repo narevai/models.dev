@@ -13,9 +13,8 @@ open_weights = false
 field = "reasoning_content"
 
 [cost]
-input = 1
-output = 3.20
-
+input = 0.95
+output = 2.55
 [limit]
 context = 205_000
 output = 205_000

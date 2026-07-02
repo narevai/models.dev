@@ -13,7 +13,10 @@ open_weights = false
 [cost]
 input = 0.50
 output = 3.00
+reasoning = 3.00
 cache_read = 0.05
+cache_write = 0.083333
+input_audio = 1.00
 
 [cost.context_over_200k]
 input = 0.50

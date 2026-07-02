@@ -13,6 +13,7 @@ open_weights = false
 [cost]
 input = 0.075
 output = 0.30
+input_audio = 0.075
 
 [limit]
 context = 1_048_576

@@ -13,7 +13,9 @@ open_weights = false
 [cost]
 input = 0.30
 output = 2.50
-cache_read = 0.075
+reasoning = 2.50
+cache_read = 0.03
+cache_write = 0.083333
 input_audio = 1.00
 
 [limit]

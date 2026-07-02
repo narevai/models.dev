@@ -8,9 +8,8 @@ tool_call = false
 open_weights = true
 
 [cost]
-input = 0.06
-output = 0.09
-
+input = 0.6
+output = 0.9
 [limit]
 context = 128_000
 output = 32_000

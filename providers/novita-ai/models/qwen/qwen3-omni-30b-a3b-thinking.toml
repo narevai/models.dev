@@ -9,11 +9,10 @@ structured_output = true
 open_weights = true
 
 [cost]
-input = 0.25
-output = 0.97
-input_audio = 2.2        # Cost per million audio input tokens (USD)
+input = 2.5
+output = 9.7
+input_audio = 2.2
 output_audio = 1.788
-
 [limit]
 context = 65_536
 output = 16_384

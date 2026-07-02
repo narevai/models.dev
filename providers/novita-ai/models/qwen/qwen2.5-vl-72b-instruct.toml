@@ -9,9 +9,8 @@ tool_call = false
 open_weights = true
 
 [cost]
-input = 0.8
-output = 0.8
-
+input = 8.0
+output = 8.0
 [limit]
 context = 32_768
 output = 32_768

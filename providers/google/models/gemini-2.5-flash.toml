@@ -11,11 +11,10 @@ structured_output = true
 open_weights = false
 
 [cost]
-input = 0.30
-output = 2.50
-cache_read = 0.075
-input_audio = 1.00
-
+input = 0.3
+output = 2.5
+cache_read = 0.03
+input_audio = 1.0
 [limit]
 context = 1_048_576
 output = 65_536
